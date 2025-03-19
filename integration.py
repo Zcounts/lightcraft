@@ -8,7 +8,7 @@ from lightcraft.controllers.tool_controller import ToolController
 from lightcraft.controllers.project_controller import ProjectController
 from lightcraft.controllers.canvas_controller import CanvasController
 from lightcraft.equipment_integration import setup_equipment_integration
-
+from lightcraft.equipment_integration import setup_equipment_integration
 
 def setup_application_components(main_window):
     """
