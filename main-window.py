@@ -105,6 +105,15 @@ class MainWindow(QMainWindow):
         
         # Add vertical splitter to main layout
         self.main_layout.addWidget(self.v_splitter)
+
+        # Initialize project controller
+        self.project_controller = ProjectController(self.scene_controller, self)
+        
+        # Set up project navigator
+        self.setup_project_navigator()
+        
+        # Connect signals
+        self.connect_signals()
         
         # Set initial splitter sizes based on config percentages
         window_width = DEFAULT_WINDOW_WIDTH
@@ -368,3 +377,51 @@ class MainWindow(QMainWindow):
         
         # Accept the close event
         event.accept()
+
+    # Add this to the existing MainWindow.__init__ function:
+    
+    # Initialize project controller
+    self.project_controller = ProjectController(self.scene_controller, self)
+    
+    # Set up project navigator
+    self.setup_project_navigator()
+    
+    # Connect signals
+    self.connect_signals()
+    
+    # Add these new methods to the MainWindow class:
+    
+    def setup_project_navigator(self):
+        """Set up the project navigator panel."""
+        # Create project navigator
+        self.project_navigator = ProjectNavigator(self)
+        
+        # Set project controller
+        self.project_controller.set_project_navigator(self.project_navigator)
+        
+        # Replace the existing project navigator with our enhanced version
+        if hasattr(self, 'v_splitter') and hasattr(self, 'project_navigator'):
+            self.v_splitter.replaceWidget(1, self.project_navigator)
+        
+    def connect_signals(self):
+        """Connect signals for application components."""
+        # Connect close event handler
+        QApplication.instance().aboutToQuit.connect(self.on_application_quit)
+    
+    def closeEvent(self, event):
+        """Handle window close event."""
+        # Check if we can close (unsaved changes)
+        if self.project_controller.can_application_close():
+            # Save window settings
+            self.save_settings()
+            event.accept()
+        else:
+            event.ignore()
+    
+    def on_application_quit(self):
+        """Handle application quit event."""
+        # Clean up resources
+        if hasattr(self, 'project_controller'):
+            if hasattr(self.project_controller, 'project_manager'):
+                if hasattr(self.project_controller.project_manager, 'db'):
+                    self.project_controller.project_manager.db.disconnect()
