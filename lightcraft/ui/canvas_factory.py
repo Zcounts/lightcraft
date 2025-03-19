@@ -65,4 +65,27 @@ class CanvasItemFactory:
             'door': WallItem,
             'window': WallItem,
             'flag': ModifierItem,
-            'flop
+            'floppy': ModifierItem,
+            'scrim': ModifierItem,
+            'diffusion': ModifierItem
+        }
+        
+        if item_type in item_map:
+            # Create the canvas item
+            return item_map[item_type](model_item)
+        
+        return None
+    
+    @staticmethod
+    def create_preview_item(item_type):
+        """
+        Create a preview item for drag operations.
+        
+        Args:
+            item_type: Type of item to preview
+        
+        Returns:
+            CanvasItem: A preview item or None if type not recognized
+        """
+        # This could be expanded for different preview types
+        return CanvasItemFactory.create_from_type(item_type)
