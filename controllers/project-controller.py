@@ -4,7 +4,7 @@ Coordinates project and scene management with UI components.
 """
 
 from PyQt6.QtCore import QObject, pyqtSlot, pyqtSignal, QTimer
-from PyQt6.QtWidgets import QMessageBox, QFileDialog, QApplication
+from PyQt6.QtWidgets import QMessageBox, QFileDialog, QApplication, QInputDialog
 
 import os
 import sys
@@ -12,7 +12,6 @@ from datetime import datetime
 
 from lightcraft.controllers.project_manager import ProjectManager
 from lightcraft.models.project_file import ProjectFile
-from lightcraft.ui.project_navigator import ProjectNavigator
 
 
 class ProjectController(QObject):
@@ -23,6 +22,16 @@ class ProjectController(QObject):
     
     # Signals
     application_close_requested = pyqtSignal(bool)  # Can close?
+    
+    # Project signals
+    project_created = pyqtSignal(str)  # Project ID
+    project_loaded = pyqtSignal(str)   # Project ID
+    project_saved = pyqtSignal(str)    # Project ID
+    project_closed = pyqtSignal()
+    
+    # File signals
+    project_file_opened = pyqtSignal(str)  # File path
+    project_file_saved = pyqtSignal(str)   # File path
     
     def __init__(self, scene_controller, parent=None):
         """
@@ -109,7 +118,7 @@ class ProjectController(QObject):
         # Other signals
         self.project_navigator.scenes_reordered.connect(self.reorder_scenes)
     
-    def create_project(self, name, description=None):
+    def create_project(self, name, description=""):
         """
         Create a new project.
         
@@ -140,7 +149,11 @@ class ProjectController(QObject):
                     return None
         
         # Create the project
-        return self.project_manager.create_new_project(name, description)
+        project_id = self.project_manager.create_new_project(name, description)
+        if project_id:
+            self.project_created.emit(project_id)
+        
+        return project_id
     
     def open_project(self, project_id):
         """
@@ -172,7 +185,11 @@ class ProjectController(QObject):
                     return False
         
         # Open the project
-        return self.project_manager.load_project(project_id)
+        success = self.project_manager.load_project(project_id)
+        if success:
+            self.project_loaded.emit(project_id)
+        
+        return success
     
     def open_project_file(self, file_path):
         """
@@ -249,6 +266,10 @@ class ProjectController(QObject):
             # Load the project
             self.project_manager.load_project(project_id)
             
+            # Emit signal
+            self.project_file_opened.emit(file_path)
+            self.project_loaded.emit(project_id)
+            
             return project_id
         except Exception as e:
             QMessageBox.critical(
@@ -274,7 +295,11 @@ class ProjectController(QObject):
             return self.save_project_as()
         
         # Save to existing file path
-        return self.save_project_to_file(self.project_manager.current_file_path)
+        success = self.save_project_to_file(self.project_manager.current_file_path)
+        if success:
+            self.project_saved.emit(self.project_manager.current_project_id)
+        
+        return success
     
     def save_project_as(self):
         """
@@ -304,7 +329,12 @@ class ProjectController(QObject):
             file_path += '.lightcraft'
         
         # Save to selected file
-        return self.save_project_to_file(file_path)
+        success = self.save_project_to_file(file_path)
+        if success:
+            self.project_file_saved.emit(file_path)
+            self.project_saved.emit(self.project_manager.current_project_id)
+        
+        return success
     
     def save_project_to_file(self, file_path):
         """
@@ -362,6 +392,9 @@ class ProjectController(QObject):
                 self.project_manager.has_unsaved_changes = False
                 self.project_manager.project_changed.emit(False)
                 
+                # Emit signal
+                self.project_file_saved.emit(file_path)
+                
                 return True
             else:
                 raise Exception("Failed to save project file")
@@ -404,9 +437,13 @@ class ProjectController(QObject):
                     return False
         
         # Close the project
-        return self.project_manager.close_project()
+        success = self.project_manager.close_project()
+        if success:
+            self.project_closed.emit()
+        
+        return success
     
-    def create_scene(self, name, description=None):
+    def create_scene(self, name, description=""):
         """
         Create a new scene in the current project.
         
@@ -422,7 +459,9 @@ class ProjectController(QObject):
             return None
         
         # Create the scene
-        return self.project_manager.create_scene(name, description)
+        scene_id = self.project_manager.create_scene(name, description)
+        
+        return scene_id
     
     def load_scene(self, scene_id):
         """
@@ -586,8 +625,7 @@ class ProjectController(QObject):
             return False
         
         # Perform auto-save
-        self.project_manager.perform_auto_save()
-        return True
+        return self.project_manager.perform_auto_save()
     
     def can_application_close(self):
         """
