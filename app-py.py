@@ -10,6 +10,7 @@ import os
 
 from lightcraft.ui.main_window import MainWindow
 from lightcraft.config import APP_NAME, ORGANIZATION_NAME, VERSION
+from lightcraft.integration import setup_application_components
 
 
 class Application:
@@ -35,6 +36,9 @@ class Application:
         
         # Initialize main window
         self.main_window = MainWindow(self.settings)
+        
+        # Set up application components and connections
+        setup_application_components(self.main_window)
     
     def run(self):
         """
