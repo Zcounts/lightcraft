@@ -4,7 +4,9 @@ Provides methods for creating canvas items from model items.
 """
 
 from lightcraft.models.equipment import LightingEquipment, SetElement, Camera, Item
-from lightcraft.ui.canvas_items import LightItem, CameraItem, WallItem, ModifierItem
+from lightcraft.ui.canvas_items import (
+    LightItem, CameraItem, WallItem, ModifierItem
+)
 
 
 class CanvasItemFactory:
@@ -63,14 +65,4 @@ class CanvasItemFactory:
             'door': WallItem,
             'window': WallItem,
             'flag': ModifierItem,
-            'floppy': ModifierItem,
-            'cutter': ModifierItem,
-            'scrim': ModifierItem,
-            'neg': ModifierItem,
-            'diffusion': ModifierItem
-        }
-        
-        if item_type.lower() in item_map:
-            return item_map[item_type.lower()](model_item)
-        
-        return None
+            'flop
