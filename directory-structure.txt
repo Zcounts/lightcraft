@@ -1,0 +1,39 @@
+lightcraft/
+│
+├── main.py                 # Application entry point
+├── requirements.txt        # Dependencies
+├── setup.py                # Installation script
+├── README.md               # Documentation
+│
+├── lightcraft/             # Main package
+│   ├── __init__.py
+│   ├── app.py              # Application class
+│   ├── config.py           # Configuration settings
+│   │
+│   ├── ui/                 # UI components
+│   │   ├── __init__.py
+│   │   ├── main_window.py  # Main application window
+│   │   ├── canvas_area.py  # Canvas for lighting diagram
+│   │   ├── tool_palette.py # Tool selection panel
+│   │   ├── properties_panel.py # Item properties panel
+│   │   └── project_navigator.py # Scene/project navigator
+│   │
+│   ├── models/             # Data models
+│   │   ├── __init__.py
+│   │   ├── project.py      # Project data model
+│   │   ├── scene.py        # Scene data model
+│   │   └── equipment.py    # Equipment data model
+│   │
+│   ├── controllers/        # Business logic
+│   │   ├── __init__.py
+│   │   ├── tool_controller.py # Handles tool operations
+│   │   └── scene_controller.py # Manages scene operations
+│   │
+│   └── resources/          # Application resources
+│       ├── icons/          # UI icons
+│       └── styles/         # CSS styles
+│
+└── tests/                  # Unit tests
+    ├── __init__.py
+    ├── test_models.py
+    └── test_controllers.py
