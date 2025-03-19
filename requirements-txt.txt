@@ -1,4 +1,0 @@
-# LightCraft dependencies
-PyQt6>=6.5.0
-Pillow>=9.5.0
-reportlab>=3.6.12    # For PDF export in future prompts
