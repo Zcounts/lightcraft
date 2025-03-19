@@ -1,22 +1,24 @@
 """
-This module provides integration code to connect the equipment library and properties panel
-with the existing LightCraft application framework.
+Integration module for the LightCraft application's equipment library.
+Connects equipment library with canvas and controllers.
 """
 
 from PyQt6.QtWidgets import QVBoxLayout, QSplitter, QWidget
-from PyQt6.QtCore import Qt, QPointF
+from PyQt6.QtCore import Qt, QPointF, QObject, pyqtSignal, pyqtSlot
 
 from lightcraft.ui.equipment_library import EquipmentLibraryPanel
 from lightcraft.ui.properties_panel import PropertiesPanel
-from lightcraft.controllers.canvas_controller import CanvasController
 from lightcraft.models.equipment import LightingEquipment, Camera, SetElement
 from lightcraft.models.equipment_data import get_equipment_by_id
 
 
-class EquipmentController:
+class EquipmentController(QObject):
     """
     Controller for managing equipment, bridging between the UI and data models.
     """
+    
+    # Signal for when equipment is selected from the library
+    equipment_selected = pyqtSignal(object)  # Emits model item
     
     def __init__(self, main_window, scene_controller, canvas_controller):
         """
@@ -27,6 +29,8 @@ class EquipmentController:
             scene_controller: Scene controller instance
             canvas_controller: Canvas controller instance
         """
+        super().__init__(main_window)
+        
         self.main_window = main_window
         self.scene_controller = scene_controller
         self.canvas_controller = canvas_controller
@@ -34,7 +38,7 @@ class EquipmentController:
         # Create equipment library panel
         self.equipment_library = EquipmentLibraryPanel()
         
-        # Create properties panel (replacing the basic one)
+        # Create properties panel (eventually will replace the basic one)
         self.properties_panel = PropertiesPanel()
         
         # Set up connections
@@ -104,7 +108,6 @@ class EquipmentController:
             equipment_id: ID of the selected equipment
             equipment_data: Data dictionary for the equipment
         """
-        # For now, just show the selected equipment's properties
         print(f"Selected equipment: {equipment_id} - {equipment_data['name']}")
     
     def on_equipment_dropped(self, equipment_id, equipment_data, position):
@@ -123,47 +126,8 @@ class EquipmentController:
                 canvas_view.mapFromGlobal(position)
             )
             
-            # Determine equipment type based on category
-            equipment_type = None
-            if equipment_data['category'] == 'lights':
-                equipment_type = 'light'
-            elif equipment_data['category'] == 'camera':
-                equipment_type = 'camera'
-            elif equipment_data['category'] == 'set':
-                # Determine specific type based on subcategory
-                if equipment_data['subcategory'] == 'walls':
-                    equipment_type = 'set_element'
-                elif equipment_data['subcategory'] == 'doors':
-                    equipment_type = 'set_element'
-                else:
-                    equipment_type = 'set_element'
-            elif equipment_data['category'] == 'grip':
-                if equipment_data['subcategory'] == 'control':
-                    equipment_type = 'set_element'  # Flags, scrims, etc.
-                else:
-                    equipment_type = 'set_element'
-            
-            # If we determined a valid type, create the item
-            if equipment_type:
-                # Create properties for the new item
-                properties = {}
-                properties["name"] = equipment_data["name"]
-                
-                # Copy selected properties from equipment data
-                if "properties" in equipment_data:
-                    for key, value in equipment_data["properties"].items():
-                        properties[key] = value
-                
-                # For set elements, set the element type based on equipment type
-                if equipment_type == 'set_element' and 'equipment_type' in properties:
-                    properties['element_type'] = properties['equipment_type']
-                
-                # Create the item via canvas controller
-                self.canvas_controller.create_new_item(
-                    equipment_type, 
-                    scene_pos, 
-                    properties
-                )
+            # Forward to canvas controller to handle the equipment drop
+            self.canvas_controller.handle_equipment_drop(equipment_id, scene_pos)
     
     def on_property_changed(self, property_name, value):
         """
@@ -210,6 +174,10 @@ def setup_equipment_integration(main_window, scene_controller, canvas_controller
     
     # Replace panels in main window
     equipment_controller.replace_panels_in_main_window()
+    
+    # Connect the properties panel with the canvas controller
+    if hasattr(canvas_controller, 'connect_property_panel'):
+        canvas_controller.connect_property_panel(equipment_controller.properties_panel)
     
     # Store reference to equipment controller
     main_window.equipment_controller = equipment_controller
