@@ -232,6 +232,25 @@ class ToolPalette(QScrollArea):
         
         # Add stretcher to push all content to the top
         self.layout.addStretch(1)
+
+    def select_tool(self, tool_id):
+        """
+        Programmatically select a tool.
+        
+        Args:
+            tool_id: ID of the tool to select
+        
+        Returns:
+            bool: True if tool was selected, False if not found
+        """
+        # Find the button with this tool_id and check it
+        for button in self.master_button_group.buttons():
+            if button.property("tool_id") == tool_id:
+                button.setChecked(True)
+                self.on_tool_selected(button)
+                return True
+        
+        return False
     
     def add_category(self, title):
         """
