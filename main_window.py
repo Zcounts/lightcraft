@@ -409,6 +409,101 @@ class MainWindow(QMainWindow):
         QApplication.instance().aboutToQuit.connect(self.on_application_quit)
     
     def closeEvent(self, event):
+        """
+        Handle window close event.
+        
+        Args:
+            event: QCloseEvent instance
+        """
+        # Check if we can close the application (unsaved changes)
+        if hasattr(self, 'project_controller') and self.project_controller:
+            if self.project_controller.can_application_close():
+                # Save window state and geometry
+                self.save_settings()
+                event.accept()
+            else:
+                event.ignore()
+        else:
+            # No project controller, just save settings and close
+            self.save_settings()
+            event.accept()
+    
+    def on_application_quit(self):
+        """Handle application quit event."""
+        # Clean up resources
+        if hasattr(self, 'project_controller') and hasattr(self.project_controller, 'project_manager'):
+            if hasattr(self.project_controller.project_manager, 'db'):
+                self.project_controller.project_manager.db.disconnect()
+                
+    def on_new_project(self):
+        """Handle new project action."""
+        if hasattr(self, 'project_controller'):
+            from PyQt6.QtWidgets import QInputDialog
+            
+            # Show dialog to get project name
+            name, ok = QInputDialog.getText(
+                self, "New Project", "Project Name:", text="New Project"
+            )
+            
+            if ok and name:
+                # Create new project
+                self.project_controller.create_project(name)
+                
+                # Update status bar
+                self.statusBar.showMessage(f"Created new project: {name}", 3000)
+    
+    def on_open_project(self):
+        """Handle open project action."""
+        if hasattr(self, 'project_controller'):
+            from PyQt6.QtWidgets import QFileDialog
+            
+            # Show file dialog
+            file_path, _ = QFileDialog.getOpenFileName(
+                self, "Open Project", "", "LightCraft Projects (*.lightcraft)"
+            )
+            
+            if file_path:
+                # Open project file
+                self.project_controller.open_project_file(file_path)
+                
+                # Update status bar
+                self.statusBar.showMessage(f"Opened project: {file_path}", 3000)
+    
+    def on_save_project(self):
+        """Handle save project action."""
+        if hasattr(self, 'project_controller'):
+            # Save project
+            success = self.project_controller.save_project()
+            
+            if success:
+                self.statusBar.showMessage("Project saved", 3000)
+            else:
+                self.statusBar.showMessage("Failed to save project", 3000)
+    
+    def on_save_project_as(self):
+        """Handle save project as action."""
+        if hasattr(self, 'project_controller'):
+            from PyQt6.QtWidgets import QFileDialog
+            
+            # Show file dialog
+            file_path, _ = QFileDialog.getSaveFileName(
+                self, "Save Project As", "", "LightCraft Projects (*.lightcraft)"
+            )
+            
+            if file_path:
+                # Add extension if missing
+                if not file_path.endswith('.lightcraft'):
+                    file_path += '.lightcraft'
+                    
+                # Save project to file
+                success = self.project_controller.save_project_to_file(file_path)
+                
+                if success:
+                    self.statusBar.showMessage(f"Project saved as: {file_path}", 3000)
+                else:
+                    self.statusBar.showMessage("Failed to save project", 3000)
+    
+    def closeEvent(self, event):
         """Handle window close event."""
         # Check if we can close (unsaved changes)
         if self.project_controller.can_application_close():
