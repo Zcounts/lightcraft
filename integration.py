@@ -49,6 +49,13 @@ def setup_controllers(main_window):
     
     # Set project navigator in project controller
     main_window.project_controller.set_project_navigator(main_window.project_navigator)
+    # Inside setup_controllers function in integration.py
+
+    main_window.canvas_controller = CanvasController(
+        main_window.scene_controller, 
+        main_window.canvas_area, 
+        main_window
+    )
 
 
 def connect_signals(main_window):
