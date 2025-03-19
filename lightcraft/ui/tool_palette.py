@@ -10,7 +10,7 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtCore import Qt, QSize, pyqtSignal
 from PyQt6.QtGui import QIcon, QFont, QCursor
-
+from PyQt6.QtWidgets import QButtonGroup
 
 class ToolButton(QToolButton):
     """Custom tool button with improved styling and feedback."""
