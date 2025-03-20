@@ -306,15 +306,13 @@ class LightingScene(QGraphicsScene):
         Handle mouse move events.
         
         Args:
-            event: QGraphicsSceneMouseEvent
+            event: QMouseEvent instance
         """
-        # If we're creating an item, update it
-        if self.creation_in_progress and self.current_item:
-            self.update_item_creation(event.scenePos())
-            event.accept()
-            return
-        
-        # Otherwise, use default behavior
+        # Forward to tool controller if available
+        if hasattr(self, 'tool_controller') and self.tool_controller:
+            pos = self.mapToScene(event.pos())
+            self.tool_controller.handle_canvas_move(event, pos)
+            
         super().mouseMoveEvent(event)
     
     def mouseReleaseEvent(self, event):
@@ -322,20 +320,17 @@ class LightingScene(QGraphicsScene):
         Handle mouse release events.
         
         Args:
-            event: QGraphicsSceneMouseEvent
+            event: QMouseEvent instance
         """
-        # If we're creating an item, finish the creation
-        if self.creation_in_progress and self.current_item:
-            self.finish_item_creation(event.scenePos())
-            event.accept()
-            return
-            
-        # Remove preview item if it exists
-        if hasattr(self, 'preview_item') and self.preview_item:
-            self.removeItem(self.preview_item)
-            self.preview_item = None
+        # Forward to tool controller if available
+        if hasattr(self, 'tool_controller') and self.tool_controller:
+            pos = self.mapToScene(event.pos())
+            self.tool_controller.handle_canvas_release(event, pos)
         
-        # Call parent implementation
+        # Reset drag mode after middle button release
+        if event.button() == Qt.MouseButton.MiddleButton:
+            self.setDragMode(QGraphicsView.DragMode.RubberBandDrag)
+        
         super().mouseReleaseEvent(event)
     
     def set_active_tool(self, tool):
@@ -486,6 +481,9 @@ class LightingView(QGraphicsView):
         
         # Enable drag and drop
         self.setAcceptDrops(True)
+
+        # Tool controller reference (set externally)
+        self.tool_controller = None
     
     def wheelEvent(self, event):
         """
@@ -516,6 +514,11 @@ class LightingView(QGraphicsView):
         Args:
             event: QMouseEvent instance
         """
+        # Forward to tool controller if available
+        if hasattr(self, 'tool_controller') and self.tool_controller:
+            pos = self.mapToScene(event.pos())
+            self.tool_controller.handle_canvas_press(event, pos)
+            
         # Middle button for panning
         if event.button() == Qt.MouseButton.MiddleButton:
             self.setDragMode(QGraphicsView.DragMode.ScrollHandDrag)
