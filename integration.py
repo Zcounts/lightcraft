@@ -56,6 +56,12 @@ def setup_controllers(main_window):
     if hasattr(main_window, 'project_navigator'):
         main_window.project_controller.set_project_navigator(main_window.project_navigator)
 
+    # Connect tool controller to canvas view and scene
+    if hasattr(main_window.canvas_area, 'view'):
+        main_window.canvas_area.view.tool_controller = main_window.tool_controller
+        if hasattr(main_window.canvas_area, 'scene'):
+            main_window.canvas_area.scene.tool_controller = main_window.tool_controller
+
 
 def connect_signals(main_window):
     """
