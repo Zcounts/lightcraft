@@ -6,9 +6,9 @@ Provides the main drawing area where lighting diagrams are created and manipulat
 from PyQt6.QtWidgets import (
     QWidget, QGraphicsView, QGraphicsScene, QVBoxLayout,
     QGraphicsItem, QGraphicsItemGroup, QGraphicsRectItem,
-    QGraphicsTextItem, QStyleOptionGraphicsItem, QGraphicsSceneMouseEvent,
-    QUndoStack, QUndoCommand
+    QGraphicsTextItem, QStyleOptionGraphicsItem, QGraphicsSceneMouseEvent
 )
+from PyQt6.QtGui import QUndoStack, QUndoCommand
 from PyQt6.QtCore import Qt, QRectF, QPointF, pyqtSignal, QSize, QMimeData
 from PyQt6.QtGui import (
     QPen, QBrush, QColor, QFont, QPainter, QTransform,
