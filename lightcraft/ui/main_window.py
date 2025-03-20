@@ -355,7 +355,7 @@ class MainWindow(QMainWindow):
     def on_save_project(self):
         """Handle save project action."""
         if self.project_controller:
-            self.project_controller.project_saved.emit()
+            self.project_controller.project_saved.emit(self.project_controller.current_project_id)
             self.statusBar.showMessage("Project saved", 3000)
     
     def on_save_project_as(self):
