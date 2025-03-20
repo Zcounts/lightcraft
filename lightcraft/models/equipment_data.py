@@ -469,7 +469,7 @@ def get_equipment_icon_path(equipment_id):
     return None
     }
 # Add the remaining equipment items to the library
-    EQUIPMENT_LIBRARY.update({
+EQUIPMENT_LIBRARY.update({
     "fresnel_300w": {
         "name": "300W Fresnel",
         "category": "lights",
