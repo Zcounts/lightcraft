@@ -112,8 +112,8 @@ class CanvasArea(QWidget):
         # Accept equipment or item drags
         if event.mimeData().hasFormat("application/x-equipment") or \
            event.mimeData().hasFormat("application/x-canvas-item"):
-            event.accept()
             event.acceptProposedAction()
+            event.accept()
     
     def dragMoveEvent(self, event):
         """
@@ -151,6 +151,7 @@ class CanvasArea(QWidget):
                     if hasattr(self.parent(), 'statusBar'):
                         self.parent().statusBar.showMessage(f"Added {equipment_data.get('name', 'item')} to canvas", 3000)
                 
+            event.accept()
             event.acceptProposedAction()
         
         # Handle canvas item drops (for moving items)
@@ -167,6 +168,7 @@ class CanvasArea(QWidget):
                     self.item_moved.emit(item)
                     break
             
+            event.accept()
             event.acceptProposedAction()
     
     def clear_scene(self):
