@@ -300,8 +300,8 @@ class LightingScene(QGraphicsScene):
         # If we're creating an item or using any tool, handle it
         if hasattr(self, 'active_tool') and self.active_tool:
             # For create tools
-            if self.active_tool.startswith("create_"):
-                self.start_item_creation(event.scenePos(), self.active_tool.split("_")[1])
+            if self.active_tool in ["wall", "door", "window", "light-spot", "light-flood", "light-led", "camera", "flag", "floppy", "scrim", "diffusion"]:
+                self.start_item_creation(event.scenePos(), self.active_tool)
                 event.accept()
                 return
             # Forward to tool controller if available
@@ -360,10 +360,13 @@ class LightingScene(QGraphicsScene):
             pos: Position to create at
             item_type: Type of item to create
         """
-        # This method would be implemented to create the appropriate item
-        # For now, just set a flag
         self.creation_in_progress = True
-        self.current_item = None  # Will be set by the factory
+        self.drawing_start_pos = pos
+        
+        # Forward to tool controller if available
+        if hasattr(self, 'tool_controller') and self.tool_controller:
+            data = {"type": item_type, "pos": pos}
+            self.tool_controller.tool_action.emit("create", data)
     
     def update_item_creation(self, pos):
         """
@@ -607,6 +610,15 @@ class LightingView(QGraphicsView):
             event.acceptProposedAction()
         else:
             super().dragMoveEvent(event)
+
+    def dragLeaveEvent(self, event):
+        """
+        Handle drag leave events.
+        
+        Args:
+            event: QDragLeaveEvent
+        """
+        super().dragLeaveEvent(event)
     
     def dropEvent(self, event):
         """
