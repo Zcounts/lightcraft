@@ -17,12 +17,19 @@ def handle_exception(exc_type, exc_value, exc_traceback):
 
 def main():
     """Main entry point for the LightCraft application."""
-    app = Application(sys.argv)
-    exit_code = app.run()
-    sys.exit(exit_code)
+    sys.excepthook = handle_exception
+    try:
+        app = Application(sys.argv)
+        exit_code = app.run()
+        sys.exit(exit_code)
+    except Exception as e:
+        print(f"Fatal error: {e}")
+        import traceback
+        traceback.print_exc()
+        input("Press Enter to exit...")
+        sys.exit(1)
 
 if __name__ == "__main__":
-    sys.excepthook = handle_exception
     main()
 
 try:
