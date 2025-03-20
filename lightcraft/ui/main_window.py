@@ -10,6 +10,7 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtCore import Qt, QSize, QSettings
 from PyQt6.QtGui import QAction, QIcon
+from lightcraft.controllers.scene_controller import SceneController
 from lightcraft.controllers.project_controller import ProjectController
 from lightcraft.ui.project_navigator import ProjectNavigator
 from lightcraft.ui.canvas_area import CanvasArea
