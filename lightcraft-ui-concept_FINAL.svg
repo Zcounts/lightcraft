@@ -1,0 +1,327 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">
+  <!-- Dark Background -->
+  <rect width="1440" height="900" fill="#141414"/>
+
+  <!-- Top Menu Bar -->
+  <rect x="0" y="0" width="1440" height="40" fill="#1A1A1A"/>
+  
+  <!-- Status Bar -->
+  <rect x="0" y="870" width="1440" height="30" fill="#1A1A1A"/>
+  <text x="20" y="890" font-family="Arial" font-size="12" fill="#888888">Default Scene | Unsaved Changes | Grid: On</text>
+  
+  <!-- Left Panel - Combined Tool Palette and Equipment Library -->
+  <rect x="0" y="40" width="200" height="830" fill="#1E1E1E"/>
+  
+  <!-- Tool Categories -->
+  <rect x="10" y="60" width="180" height="30" rx="3" fill="#282828"/>
+  <text x="100" y="80" font-family="Arial" font-size="13" fill="#E0E0E0" text-anchor="middle">Selection Tools</text>
+  
+  <!-- Tool Buttons -->
+  <rect x="15" y="100" width="82" height="30" rx="2" fill="#3F3F3F"/>
+  <text x="56" y="120" font-family="Arial" font-size="12" fill="#E0E0E0" text-anchor="middle">Select</text>
+  
+  <rect x="103" y="100" width="82" height="30" rx="2" fill="#2A2A2A"/>
+  <text x="144" y="120" font-family="Arial" font-size="12" fill="#E0E0E0" text-anchor="middle">Rotate</text>
+  
+  <!-- Light Tools Category -->
+  <rect x="10" y="150" width="180" height="30" rx="3" fill="#282828"/>
+  <text x="100" y="170" font-family="Arial" font-size="13" fill="#E0E0E0" text-anchor="middle">Lighting Tools</text>
+  
+  <!-- Light Tool Buttons -->
+  <rect x="15" y="190" width="82" height="30" rx="2" fill="#2A2A2A"/>
+  <text x="56" y="210" font-family="Arial" font-size="12" fill="#E0E0E0" text-anchor="middle">Spot Light</text>
+  
+  <rect x="103" y="190" width="82" height="30" rx="2" fill="#2A2A2A"/>
+  <text x="144" y="210" font-family="Arial" font-size="12" fill="#E0E0E0" text-anchor="middle">Flood Light</text>
+  
+  <rect x="15" y="230" width="82" height="30" rx="2" fill="#2A2A2A"/>
+  <text x="56" y="250" font-family="Arial" font-size="12" fill="#E0E0E0" text-anchor="middle">LED Panel</text>
+  
+  <!-- Equipment Library -->
+  <rect x="10" y="300" width="180" height="30" rx="3" fill="#282828"/>
+  <text x="100" y="320" font-family="Arial" font-size="13" fill="#E0E0E0" text-anchor="middle">Equipment Library</text>
+  
+  <!-- Equipment Categories in a ScrollArea -->
+  <rect x="10" y="340" width="180" height="350" rx="3" fill="#232323"/>
+
+  <!-- Equipment Items -->
+  <rect x="20" y="350" width="75" height="75" rx="2" fill="#333333"/>
+  <circle cx="57" cy="380" r="15" fill="#FFCC00" opacity="0.8"/>
+  <text x="57" y="415" font-family="Arial" font-size="10" fill="#E0E0E0" text-anchor="middle">650W Fresnel</text>
+  
+  <rect x="105" y="350" width="75" height="75" rx="2" fill="#333333"/>
+  <circle cx="142" cy="380" r="15" fill="#FFFFFF" opacity="0.8"/>
+  <text x="142" y="415" font-family="Arial" font-size="10" fill="#E0E0E0" text-anchor="middle">1.2K HMI</text>
+  
+  <rect x="20" y="435" width="75" height="75" rx="2" fill="#333333"/>
+  <rect x="47" y="465" width="20" height="20" fill="#F5F5FF" opacity="0.8"/>
+  <text x="57" y="500" font-family="Arial" font-size="10" fill="#E0E0E0" text-anchor="middle">LED Panel</text>
+  
+  <rect x="105" y="435" width="75" height="75" rx="2" fill="#333333"/>
+  <circle cx="142" cy="465" r="12" fill="#FFE2B7" opacity="0.8"/>
+  <text x="142" y="500" font-family="Arial" font-size="10" fill="#E0E0E0" text-anchor="middle">China Ball</text>
+
+  <!-- Right Panel - Properties Panel -->
+  <rect x="1240" y="40" width="200" height="830" fill="#1E1E1E"/>
+  
+  <!-- Properties Header -->
+  <rect x="1250" y="60" width="180" height="40" rx="3" fill="#282828"/>
+  <text x="1340" y="85" font-family="Arial" font-size="15" fill="#E0E0E0" text-anchor="middle">Properties</text>
+  
+  <!-- Properties Form -->
+  <rect x="1250" y="110" width="180" height="500" rx="3" fill="#232323"/>
+  
+  <!-- Selected Item Label -->
+  <text x="1260" y="130" font-family="Arial" font-size="13" fill="#3794FF" font-weight="bold">650W Fresnel</text>
+  
+  <!-- Property Groups -->
+  <rect x="1260" y="150" width="160" height="20" rx="2" fill="#2D2D2D"/>
+  <text x="1340" y="165" font-family="Arial" font-size="12" fill="#E0E0E0" text-anchor="middle">Common Properties</text>
+  
+  <!-- Property Forms -->
+  <text x="1270" y="195" font-family="Arial" font-size="11" fill="#B8B8B8" text-anchor="start">Name:</text>
+  <rect x="1320" y="182" width="90" height="20" rx="2" fill="#333333" stroke="#444444" stroke-width="1"/>
+  <text x="1325" y="196" font-family="Arial" font-size="11" fill="#E0E0E0">Main Key</text>
+  
+  <text x="1270" y="225" font-family="Arial" font-size="11" fill="#B8B8B8" text-anchor="start">Position X:</text>
+  <rect x="1330" y="212" width="80" height="20" rx="2" fill="#333333" stroke="#444444" stroke-width="1"/>
+  <text x="1335" y="226" font-family="Arial" font-size="11" fill="#E0E0E0">320</text>
+  
+  <text x="1270" y="255" font-family="Arial" font-size="11" fill="#B8B8B8" text-anchor="start">Position Y:</text>
+  <rect x="1330" y="242" width="80" height="20" rx="2" fill="#333333" stroke="#444444" stroke-width="1"/>
+  <text x="1335" y="256" font-family="Arial" font-size="11" fill="#E0E0E0">250</text>
+  
+  <text x="1270" y="285" font-family="Arial" font-size="11" fill="#B8B8B8" text-anchor="start">Rotation:</text>
+  <rect x="1330" y="272" width="80" height="20" rx="2" fill="#333333" stroke="#444444" stroke-width="1"/>
+  <text x="1335" y="286" font-family="Arial" font-size="11" fill="#E0E0E0">45°</text>
+  
+  <!-- Light Properties Group -->
+  <rect x="1260" y="310" width="160" height="20" rx="2" fill="#2D2D2D"/>
+  <text x="1340" y="325" font-family="Arial" font-size="12" fill="#E0E0E0" text-anchor="middle">Light Properties</text>
+  
+  <text x="1270" y="355" font-family="Arial" font-size="11" fill="#B8B8B8" text-anchor="start">Power:</text>
+  <rect x="1330" y="342" width="80" height="20" rx="2" fill="#333333" stroke="#444444" stroke-width="1"/>
+  <text x="1335" y="356" font-family="Arial" font-size="11" fill="#E0E0E0">650W</text>
+  
+  <text x="1270" y="385" font-family="Arial" font-size="11" fill="#B8B8B8" text-anchor="start">Beam Angle:</text>
+  <rect x="1330" y="372" width="80" height="20" rx="2" fill="#333333" stroke="#444444" stroke-width="1"/>
+  <text x="1335" y="386" font-family="Arial" font-size="11" fill="#E0E0E0">35°</text>
+  
+  <text x="1270" y="415" font-family="Arial" font-size="11" fill="#B8B8B8" text-anchor="start">Intensity:</text>
+  <rect x="1270" y="422" width="140" height="18" rx="9" fill="#282828"/>
+  <rect x="1270" y="422" width="100" height="18" rx="9" fill="#3794FF"/>
+  <circle cx="1370" cy="431" r="8" fill="#FFFFFF"/>
+  <text x="1410" y="435" font-family="Arial" font-size="11" fill="#E0E0E0">75%</text>
+  
+  <text x="1270" y="465" font-family="Arial" font-size="11" fill="#B8B8B8" text-anchor="start">Color Temp:</text>
+  <rect x="1330" y="452" width="80" height="20" rx="2" fill="#333333" stroke="#444444" stroke-width="1"/>
+  <text x="1335" y="466" font-family="Arial" font-size="11" fill="#E0E0E0">3200K</text>
+  
+  <text x="1270" y="495" font-family="Arial" font-size="11" fill="#B8B8B8" text-anchor="start">Color:</text>
+  <rect x="1330" y="482" width="30" height="20" rx="2" fill="#FFCC00" stroke="#444444" stroke-width="1"/>
+  
+  <!-- Scene List Panel - Bottom -->
+  <rect x="200" y="700" width="1040" height="170" fill="#1E1E1E"/>
+  
+  <!-- Scene List Header -->
+  <rect x="210" y="710" width="1020" height="30" rx="3" fill="#282828"/>
+  <text x="250" y="730" font-family="Arial" font-size="14" fill="#E0E0E0">Scenes</text>
+  
+  <!-- Add Scene Button -->
+  <rect x="1130" y="713" width="90" height="24" rx="12" fill="#3794FF"/>
+  <text x="1175" y="730" font-family="Arial" font-size="12" fill="#FFFFFF" text-anchor="middle">Add Scene</text>
+  
+  <!-- Scene Thumbnails -->
+  <rect x="220" y="750" width="120" height="80" rx="3" fill="#333333" stroke="#3794FF" stroke-width="2"/>
+  <text x="280" y="795" font-family="Arial" font-size="12" fill="#FFFFFF" text-anchor="middle">Main Scene</text>
+  
+  <rect x="360" y="750" width="120" height="80" rx="3" fill="#333333"/>
+  <text x="420" y="795" font-family="Arial" font-size="12" fill="#FFFFFF" text-anchor="middle">Scene 2</text>
+  
+  <rect x="500" y="750" width="120" height="80" rx="3" fill="#333333"/>
+  <text x="560" y="795" font-family="Arial" font-size="12" fill="#FFFFFF" text-anchor="middle">Scene 3</text>
+
+  <!-- Canvas Area with Grid and Demo Content -->
+  <rect x="200" y="40" width="1040" height="660" fill="#212121"/>
+  
+  <!-- Canvas Grid -->
+  <g stroke="#333333" stroke-width="1">
+    <!-- Vertical grid lines -->
+    <line x1="220" y1="60" x2="220" y2="680"/>
+    <line x1="320" y1="60" x2="320" y2="680"/>
+    <line x1="420" y1="60" x2="420" y2="680"/>
+    <line x1="520" y1="60" x2="520" y2="680"/>
+    <line x1="620" y1="60" x2="620" y2="680"/>
+    <line x1="720" y1="60" x2="720" y2="680"/>
+    <line x1="820" y1="60" x2="820" y2="680"/>
+    <line x1="920" y1="60" x2="920" y2="680"/>
+    <line x1="1020" y1="60" x2="1020" y2="680"/>
+    <line x1="1120" y1="60" x2="1120" y2="680"/>
+    <line x1="1220" y1="60" x2="1220" y2="680"/>
+    
+    <!-- Horizontal grid lines -->
+    <line x1="200" y1="80" x2="1240" y2="80"/>
+    <line x1="200" y1="160" x2="1240" y2="160"/>
+    <line x1="200" y1="240" x2="1240" y2="240"/>
+    <line x1="200" y1="320" x2="1240" y2="320"/>
+    <line x1="200" y1="400" x2="1240" y2="400"/>
+    <line x1="200" y1="480" x2="1240" y2="480"/>
+    <line x1="200" y1="560" x2="1240" y2="560"/>
+    <line x1="200" y1="640" x2="1240" y2="640"/>
+  </g>
+  
+  <!-- Set Elements - Walls -->
+  <rect x="300" y="160" width="180" height="10" fill="#AAAAAA" stroke="#555555" stroke-width="1"/>
+  <rect x="300" y="160" width="10" height="80" fill="#AAAAAA" stroke="#555555" stroke-width="1"/>
+  <rect x="470" y="160" width="10" height="80" fill="#AAAAAA" stroke="#555555" stroke-width="1"/>
+  <rect x="300" y="240" width="440" height="10" fill="#AAAAAA" stroke="#555555" stroke-width="1"/>
+  <rect x="730" y="240" width="10" height="240" fill="#AAAAAA" stroke="#555555" stroke-width="1"/>
+  <rect x="300" y="240" width="10" height="240" fill="#AAAAAA" stroke="#555555" stroke-width="1"/>
+  <rect x="300" y="480" width="440" height="10" fill="#AAAAAA" stroke="#555555" stroke-width="1"/>
+  
+  <!-- Door in Wall -->
+  <rect x="590" y="475" width="50" height="20" fill="#8B4513" stroke="#555555" stroke-width="1"/>
+  
+  <!-- Window in Wall -->
+  <rect x="500" y="155" width="80" height="20" fill="#B0C4DE" stroke="#555555" stroke-width="1" fill-opacity="0.7"/>
+  
+  <!-- Camera Object -->
+  <g transform="translate(500, 400)">
+    <!-- Camera body (triangle shape) -->
+    <polygon points="0,-10 -15,10 15,10" fill="#333333" stroke="#555555" stroke-width="1"/>
+    
+    <!-- Camera view representation -->
+    <path d="M 0,0 L -120,-120 L 120,-120 Z" fill="rgba(150,150,150,0.1)" stroke="none"/>
+    
+    <!-- Label -->
+    <text x="0" y="30" font-family="Arial" font-size="10" fill="#E0E0E0" text-anchor="middle">Main Camera</text>
+  </g>
+  
+  <!-- Fresnel Light 1 with glow -->
+  <g transform="translate(400, 300)">
+    <!-- Light falloff glow effect -->
+    <circle cx="0" cy="0" r="80" fill="url(#fresnel-falloff1)"/>
+    
+    <!-- Light beam cone -->
+    <path d="M 0,0 L -80,-80 L 80,-80 Z" fill="rgba(255,204,0,0.2)" stroke="none"/>
+    
+    <!-- Light body -->
+    <circle cx="0" cy="0" r="12" fill="#FFCC00" stroke="#444444" stroke-width="1"/>
+    
+    <!-- Light label -->
+    <text x="0" y="30" font-family="Arial" font-size="10" fill="#E0E0E0" text-anchor="middle">650W Fresnel</text>
+    
+    <!-- Selection handles (visible when selected) -->
+    <circle cx="0" cy="-40" r="4" fill="rgba(0,120,255,0.8)" stroke="#3794FF" stroke-width="1"/> <!-- Rotation handle -->
+    <circle cx="40" cy="-40" r="4" fill="rgba(0,255,0,0.5)" stroke="green" stroke-width="1"/> <!-- Beam angle handle -->
+    <circle cx="40" cy="0" r="4" fill="rgba(255,0,0,0.5)" stroke="red" stroke-width="1"/> <!-- Intensity handle -->
+  </g>
+  
+  <!-- HMI Light with glow -->
+  <g transform="translate(600, 250)">
+    <!-- Light falloff glow effect -->
+    <circle cx="0" cy="0" r="100" fill="url(#hmi-falloff)"/>
+    
+    <!-- Light beam cone -->
+    <path d="M 0,0 L -100,100 L 100,100 Z" fill="rgba(255,255,255,0.15)" stroke="none"/>
+    
+    <!-- Light body -->
+    <circle cx="0" cy="0" r="15" fill="#FFFFFF" stroke="#444444" stroke-width="1"/>
+    
+    <!-- Light label -->
+    <text x="0" y="30" font-family="Arial" font-size="10" fill="#E0E0E0" text-anchor="middle">1.2K HMI</text>
+  </g>
+  
+  <!-- LED Panel with rectangular glow -->
+  <g transform="translate(450, 400)">
+    <!-- Light falloff glow effect -->
+    <circle cx="0" cy="0" r="60" fill="url(#led-falloff)"/>
+    
+    <!-- Light body (rectangular) -->
+    <rect x="-10" y="-10" width="20" height="20" fill="#F5F5FF" stroke="#444444" stroke-width="1"/>
+    
+    <!-- Light label -->
+    <text x="0" y="30" font-family="Arial" font-size="10" fill="#E0E0E0" text-anchor="middle">LED Panel</text>
+  </g>
+  
+  <!-- China Ball with omnidirectional glow -->
+  <g transform="translate(650, 350)">
+    <!-- Light falloff glow effect (circular) -->
+    <circle cx="0" cy="0" r="70" fill="url(#omni-falloff)"/>
+    
+    <!-- Light body -->
+    <circle cx="0" cy="0" r="15" fill="rgba(255,227,183,0.9)" stroke="#444444" stroke-width="1"/>
+    
+    <!-- Light label -->
+    <text x="0" y="30" font-family="Arial" font-size="10" fill="#E0E0E0" text-anchor="middle">China Ball</text>
+  </g>
+  
+  <!-- Light Modifier (Flag) -->
+  <g transform="translate(520, 350)">
+    <rect x="-20" y="-10" width="40" height="20" fill="#111111" stroke="#444444" stroke-width="1"/>
+    <text x="0" y="30" font-family="Arial" font-size="10" fill="#E0E0E0" text-anchor="middle">Flag</text>
+  </g>
+  
+  <!-- Menu Bar Content -->
+  <text x="20" y="24" font-family="Arial" font-size="14" fill="#FFFFFF" text-anchor="start" font-weight="bold">Light<tspan fill="#3794FF">Craft</tspan></text>
+  <text x="140" y="24" font-family="Arial" font-size="12" fill="#CCCCCC" text-anchor="start">File</text>
+  <text x="180" y="24" font-family="Arial" font-size="12" fill="#CCCCCC" text-anchor="start">Edit</text>
+  <text x="220" y="24" font-family="Arial" font-size="12" fill="#CCCCCC" text-anchor="start">View</text>
+  <text x="265" y="24" font-family="Arial" font-size="12" fill="#CCCCCC" text-anchor="start">Tools</text>
+  <text x="310" y="24" font-family="Arial" font-size="12" fill="#CCCCCC" text-anchor="start">Help</text>
+  
+  <!-- LightCraft Logo in the Canvas -->
+  <g transform="translate(720, 360)">
+    <text font-family="Arial" font-size="48" fill="#232323" text-anchor="middle">Light<tspan fill="#3794FF">Craft</tspan></text>
+  </g>
+  
+  <!-- Toolbar under menu -->
+  <rect x="200" y="40" width="1040" height="36" fill="#1A1A1A"/>
+  
+  <!-- Toolbar Buttons -->
+  <rect x="210" y="46" width="24" height="24" rx="2" fill="#282828"/>
+  <text x="222" y="62" font-family="Arial" font-size="14" fill="#E0E0E0" text-anchor="middle">⊕</text>
+  
+  <rect x="240" y="46" width="24" height="24" rx="2" fill="#282828"/>
+  <text x="252" y="62" font-family="Arial" font-size="14" fill="#E0E0E0" text-anchor="middle">⟲</text>
+  
+  <rect x="270" y="46" width="24" height="24" rx="2" fill="#282828"/>
+  <text x="282" y="62" font-family="Arial" font-size="14" fill="#E0E0E0" text-anchor="middle">⟳</text>
+  
+  <rect x="310" y="46" width="24" height="24" rx="2" fill="#282828"/>
+  <text x="322" y="62" font-family="Arial" font-size="14" fill="#E0E0E0" text-anchor="middle">+</text>
+  
+  <rect x="340" y="46" width="24" height="24" rx="2" fill="#282828"/>
+  <text x="352" y="62" font-family="Arial" font-size="14" fill="#E0E0E0" text-anchor="middle">−</text>
+
+  <!-- Gradients for light falloff -->
+  <defs>
+    <radialGradient id="fresnel-falloff1" cx="0" cy="0" r="80" fx="0" fy="0">
+      <stop offset="0%" stop-color="rgba(255,204,0,0.3)"/>
+      <stop offset="30%" stop-color="rgba(255,204,0,0.2)"/>
+      <stop offset="70%" stop-color="rgba(255,204,0,0.1)"/>
+      <stop offset="100%" stop-color="rgba(255,204,0,0)"/>
+    </radialGradient>
+    
+    <radialGradient id="hmi-falloff" cx="0" cy="0" r="100" fx="0" fy="0">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.25)"/>
+      <stop offset="30%" stop-color="rgba(255,255,255,0.15)"/>
+      <stop offset="70%" stop-color="rgba(255,255,255,0.05)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    
+    <radialGradient id="led-falloff" cx="0" cy="0" r="60" fx="0" fy="0">
+      <stop offset="0%" stop-color="rgba(245,245,255,0.25)"/>
+      <stop offset="30%" stop-color="rgba(245,245,255,0.15)"/>
+      <stop offset="70%" stop-color="rgba(245,245,255,0.05)"/>
+      <stop offset="100%" stop-color="rgba(245,245,255,0)"/>
+    </radialGradient>
+    
+    <radialGradient id="omni-falloff" cx="0" cy="0" r="70" fx="0" fy="0">
+      <stop offset="0%" stop-color="rgba(255,227,183,0.3)"/>
+      <stop offset="40%" stop-color="rgba(255,227,183,0.15)"/>
+      <stop offset="70%" stop-color="rgba(255,227,183,0.05)"/>
+      <stop offset="100%" stop-color="rgba(255,227,183,0)"/>
+    </radialGradient>
+  </defs>
+</svg>
