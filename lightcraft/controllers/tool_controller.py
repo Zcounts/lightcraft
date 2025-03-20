@@ -34,7 +34,6 @@ class ToolController(QObject):
     
     def initialize_tools(self):
         """Initialize the available tools."""
-        # This is a placeholder for now - will be implemented in future prompts
         self.tools = {
             "select": {"cursor": Qt.CursorShape.ArrowCursor, "mode": "select"},
             "select-area": {"cursor": Qt.CursorShape.CrossCursor, "mode": "select-area"},
@@ -45,7 +44,13 @@ class ToolController(QObject):
             "window": {"cursor": Qt.CursorShape.CrossCursor, "mode": "create", "item_type": "window"},
             "light-spot": {"cursor": Qt.CursorShape.CrossCursor, "mode": "create", "item_type": "light-spot"},
             "light-flood": {"cursor": Qt.CursorShape.CrossCursor, "mode": "create", "item_type": "light-flood"},
-            "light-led": {"cursor": Qt.CursorShape.CrossCursor, "mode": "create", "item_type": "light-led"}
+            "light-led": {"cursor": Qt.CursorShape.CrossCursor, "mode": "create", "item_type": "light-led"},
+            # ADD THESE MISSING TOOLS:
+            "camera": {"cursor": Qt.CursorShape.CrossCursor, "mode": "create", "item_type": "camera"},
+            "flag": {"cursor": Qt.CursorShape.CrossCursor, "mode": "create", "item_type": "flag"},
+            "floppy": {"cursor": Qt.CursorShape.CrossCursor, "mode": "create", "item_type": "floppy"},
+            "scrim": {"cursor": Qt.CursorShape.CrossCursor, "mode": "create", "item_type": "scrim"},
+            "diffusion": {"cursor": Qt.CursorShape.CrossCursor, "mode": "create", "item_type": "diffusion"}
         }
     
     def set_active_tool(self, tool_id):
