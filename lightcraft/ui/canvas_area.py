@@ -150,10 +150,11 @@ class CanvasArea(QWidget):
                     self.canvas_controller.handle_equipment_drop(equipment_id, pos)
                     if hasattr(self.parent(), 'statusBar'):
                         self.parent().statusBar.showMessage(f"Added {equipment_data.get('name', 'item')} to canvas", 3000)
-                
+                else:
+                    print(f"Could not find equipment with ID: {equipment_id}")
+                    
             event.accept()
-            event.acceptProposedAction()
-        
+            
         # Handle canvas item drops (for moving items)
         elif event.mimeData().hasFormat("application/x-canvas-item"):
             item_id = event.mimeData().data("application/x-canvas-item").data().decode()
@@ -169,7 +170,6 @@ class CanvasArea(QWidget):
                     break
             
             event.accept()
-            event.acceptProposedAction()
     
     def clear_scene(self):
         """Clear all items from the scene."""
@@ -560,9 +560,11 @@ class LightingView(QGraphicsView):
         Args:
             event: QDragEnterEvent
         """
-        # Accept equipment drags
-        if event.mimeData().hasFormat("application/x-equipment"):
+        # Accept equipment or item drags
+        if event.mimeData().hasFormat("application/x-equipment") or \
+           event.mimeData().hasFormat("application/x-canvas-item"):
             event.accept()
+            event.acceptProposedAction()
         else:
             super().dragEnterEvent(event)
     
@@ -601,7 +603,10 @@ class LightingView(QGraphicsView):
         # Accept equipment or item drags
         if event.mimeData().hasFormat("application/x-equipment") or \
            event.mimeData().hasFormat("application/x-canvas-item"):
+            event.accept()
             event.acceptProposedAction()
+        else:
+            super().dragMoveEvent(event)
     
     def dropEvent(self, event):
         """
