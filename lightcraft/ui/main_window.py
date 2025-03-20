@@ -407,21 +407,6 @@ class MainWindow(QMainWindow):
         
         # Call parent implementation
         super().keyPressEvent(event)
-    
-    def closeEvent(self, event):
-        """Handle window close event."""
-        # Check if there are unsaved changes
-        if hasattr(self, 'project_controller') and self.project_controller:
-            # Ask project controller if it's safe to close
-            if not self.project_controller.can_application_close():
-                event.ignore()
-                return
-        
-        # Save settings
-        self.save_settings()
-        
-        # Accept the close event
-        event.accept()
 
     # Add this to the existing MainWindow.__init__ function:
     
