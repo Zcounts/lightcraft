@@ -15,17 +15,12 @@ def handle_exception(exc_type, exc_value, exc_traceback):
     print("\nPlease report this error to the developers.")
     input("Press Enter to exit...")
 
-if __name__ == "__main__":
-    import sys
-    sys.excepthook = handle_exception
-    main()
-
 def main():
     """Main entry point for the LightCraft application."""
     app = Application(sys.argv)
     exit_code = app.run()
     sys.exit(exit_code)
 
-
 if __name__ == "__main__":
+    sys.excepthook = handle_exception
     main()
