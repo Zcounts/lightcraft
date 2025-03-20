@@ -1,4 +1,4 @@
 @echo off
 echo Starting LightCraft...
-python main.py
+python run.py
 pause
