@@ -455,6 +455,20 @@ class LightingScene(QGraphicsScene):
         
         return QPointF(x, y)
 
+    def set_active_tool(self, tool):
+        """
+        Set the active tool.
+        
+        Args:
+            tool: Tool identifier
+        """
+        self.active_tool = tool
+        
+        # Clear any preview item if tool changes
+        if hasattr(self, 'preview_item') and self.preview_item:
+            self.removeItem(self.preview_item)
+            self.preview_item = None
+
 
 class LightingView(QGraphicsView):
     """
