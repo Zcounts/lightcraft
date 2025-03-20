@@ -431,7 +431,7 @@ class CanvasController(QObject):
 
         # Show status message
         if hasattr(self.parent(), 'statusBar'):
-            self.parent().statusBar.showMessage(f"Created {item_type} at ({pos.x():.0f}, {pos.y():.0f})", 3000)
+            self.parent().statusBar.showMessage(f"Created {item_type} at ({position.x():.0f}, {position.y():.0f})", 3000)
         
         # Select the new item
         if self.canvas_area.scene:
