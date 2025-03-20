@@ -122,10 +122,11 @@ class CanvasArea(QWidget):
         Args:
             event: QDragMoveEvent
         """
-        # Accept equipment or item drags
         if event.mimeData().hasFormat("application/x-equipment") or \
            event.mimeData().hasFormat("application/x-canvas-item"):
             event.acceptProposedAction()
+        else:
+            super().dragMoveEvent(event)
 
     def dropEvent(self, event):
         """
@@ -351,6 +352,15 @@ class LightingScene(QGraphicsScene):
             tool: Tool identifier
         """
         self.active_tool = tool
+        
+        # Also set the active tool in the view if available
+        if hasattr(self, 'view') and self.view:
+            self.view.active_tool = tool
+        
+        # Clear any preview item if tool changes
+        if hasattr(self, 'preview_item') and self.preview_item:
+            self.removeItem(self.preview_item)
+            self.preview_item = None
     
     def start_item_creation(self, pos, item_type):
         """
@@ -458,20 +468,6 @@ class LightingScene(QGraphicsScene):
         
         return QPointF(x, y)
 
-    def set_active_tool(self, tool):
-        """
-        Set the active tool.
-        
-        Args:
-            tool: Tool identifier
-        """
-        self.active_tool = tool
-        
-        # Clear any preview item if tool changes
-        if hasattr(self, 'preview_item') and self.preview_item:
-            self.removeItem(self.preview_item)
-            self.preview_item = None
-
 
 class LightingView(QGraphicsView):
     """
@@ -511,6 +507,9 @@ class LightingView(QGraphicsView):
 
         # Tool controller reference (set externally)
         self.tool_controller = None
+
+        # Initialize active_tool
+        self.active_tool = "select"
     
     def wheelEvent(self, event):
         """
@@ -555,21 +554,6 @@ class LightingView(QGraphicsView):
             super().mousePressEvent(fake_event)
         else:
             super().mousePressEvent(event)
-
-    def dragEnterEvent(self, event):
-        """
-        Handle drag enter events.
-        
-        Args:
-            event: QDragEnterEvent
-        """
-        # Accept equipment or item drags
-        if event.mimeData().hasFormat("application/x-equipment") or \
-           event.mimeData().hasFormat("application/x-canvas-item"):
-            event.accept()
-            event.acceptProposedAction()
-        else:
-            super().dragEnterEvent(event)
     
     def mouseReleaseEvent(self, event):
         """
@@ -606,7 +590,6 @@ class LightingView(QGraphicsView):
         # Accept equipment or item drags
         if event.mimeData().hasFormat("application/x-equipment") or \
            event.mimeData().hasFormat("application/x-canvas-item"):
-            event.accept()
             event.acceptProposedAction()
         else:
             super().dragMoveEvent(event)
