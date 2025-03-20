@@ -62,27 +62,27 @@ class ToolButton(QToolButton):
         """)
         
 # Generate SVG icon based on tool type
-        def get_svg_for_tool(self, tool_id):
-            """Get SVG content for a specific tool."""
-            # Simple SVG icons for different tools
-            svg_icons = {
-                "select": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M7,2l12,11.2l-5.8,0.5l3.3,7.3l-2.2,1l-3.2-7.4L7,18.5V2"/></svg>',
-                "select-area": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M3,3v18h18V3H3z M19,19H5V5h14V19z"/><path fill="#ffffff" d="M7,7h4v4H7V7z M13,7h4v4h-4V7z M7,13h4v4H7V13z M13,13h4v4h-4V13z"/></svg>',
-                "rotate": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M12,5V3l4,4l-4,4V9c-3.3,0-6,2.7-6,6c0,1,0.2,1.9,0.7,2.7l-1.7,1.7C3.4,18.1,3,16.6,3,15C3,9.5,7.5,5,12,5 M12,19c3.3,0,6-2.7,6-6c0-1-0.2-1.9-0.7-2.7l1.7-1.7c0.6,1.3,1,2.8,1,4.4c0,5.5-4.5,10-10,10l-4-4l4-4V19z"/></svg>',
-                "wall": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M3,6h18v12H3V6z M7,10h2v4H7V10z M11,10h2v4h-2V10z M15,10h2v4h-2V10z"/></svg>',
-                "door": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M19,3h-9C8.3,3,7,4.3,7,6v12c0,1.7,1.3,3,3,3h9V3z M13,15c-0.6,0-1-0.4-1-1s0.4-1,1-1s1,0.4,1,1S13.6,15,13,15z"/></svg>',
-                "window": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M3,3h18v18H3V3z M17,17V7H7v10H17z M5,5h2v2H5V5z M5,17h2v2H5V17z M17,5h2v2h-2V5z M17,17h2v2h-2V17z"/></svg>',
-                "light-spot": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M6.4,6.4L2,5l1.4,4.4L6.4,6.4z M17.6,6.4L20.6,5l-1.4,4.4L17.6,6.4z M12,4c-5,0-9,4-9,9c0,3.9,2.5,7.2,6,8.4V22h6v-0.6c3.5-1.2,6-4.5,6-8.4C21,8,17,4,12,4z M12,19c-3.3,0-6-2.7-6-6c0-3.3,2.7-6,6-6s6,2.7,6,6C18,16.3,15.3,19,12,19z M12,9c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4s4-1.8,4-4C16,10.8,14.2,9,12,9z"/></svg>',
-                "light-flood": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M10,2v2h4V2H10z M10,20v2h4v-2H10z M4,10h2v4H4V10z M18,10h2v4h-2V10z M17,8l1.4-1.4L17,5.2L15.6,6.6L17,8z M7,8L5.6,6.6L7,5.2L8.4,6.6L7,8z M17,16l1.4,1.4L17,18.8l-1.4-1.4L17,16z M7,16l1.4,1.4L7,18.8l-1.4-1.4L7,16z M12,6c-3.3,0-6,2.7-6,6s2.7,6,6,6s6-2.7,6-6S15.3,6,12,6z M12,16c-2.2,0-4-1.8-4-4c0-2.2,1.8-4,4-4s4,1.8,4,4C16,14.2,14.2,16,12,16z"/></svg>',
-                "light-led": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M3,3h18v18H3V3z M5,5v14h14V5H5z M7,7h10v10H7V7z M9,9h6v6H9V9z"/></svg>',
-                "camera": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M9,3L7.2,5H4C2.9,5,2,5.9,2,7v12c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V7c0-1.1-0.9-2-2-2h-3.2L15,3H9z M12,18c-2.8,0-5-2.2-5-5s2.2-5,5-5s5,2.2,5,5S14.8,18,12,18z M12,10c-1.7,0-3,1.3-3,3s1.3,3,3,3s3-1.3,3-3S13.7,10,12,10z"/></svg>',
-                "flag": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M12.4,2l-0.2,6.6L14,8l1.2-6H12.4z M19,8l-7.8-2.6L11,11.4L18.8,14L19,8z M7,2v20h2V2H7z"/></svg>',
-                "floppy": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M5,3h14c1.1,0,2,0.9,2,2v14c0,1.1-0.9,2-2,2H5c-1.1,0-2-0.9-2-2V5C3,3.9,3.9,3,5,3z M12,17c1.7,0,3-1.3,3-3s-1.3-3-3-3s-3,1.3-3,3S10.3,17,12,17z M6,6h9v4H6V6z"/></svg>',
-                "scrim": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M3,3h4v4H3V3z M9,3h4v4H9V3z M15,3h4v4h-4V3z M3,9h4v4H3V9z M9,9h4v4H9V9z M15,9h4v4h-4V9z M3,15h4v4H3V15z M9,15h4v4H9V15z M15,15h4v4h-4V15z"/></svg>',
-                "diffusion": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M2,4h20v16H2V4z M4,6v12h16V6H4z M8,8h8v2H8V8z M8,12h8v2H8V12z M8,16h8v2H8V16z"/></svg>'
-            }
-            
-            return svg_icons.get(tool_id, None)
+    def get_svg_for_tool(self, tool_id):
+        """Get SVG content for a specific tool."""
+        # Simple SVG icons for different tools
+        svg_icons = {
+            "select": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M7,2l12,11.2l-5.8,0.5l3.3,7.3l-2.2,1l-3.2-7.4L7,18.5V2"/></svg>',
+            "select-area": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M3,3v18h18V3H3z M19,19H5V5h14V19z"/><path fill="#ffffff" d="M7,7h4v4H7V7z M13,7h4v4h-4V7z M7,13h4v4H7V13z M13,13h4v4h-4V13z"/></svg>',
+            "rotate": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M12,5V3l4,4l-4,4V9c-3.3,0-6,2.7-6,6c0,1,0.2,1.9,0.7,2.7l-1.7,1.7C3.4,18.1,3,16.6,3,15C3,9.5,7.5,5,12,5 M12,19c3.3,0,6-2.7,6-6c0-1-0.2-1.9-0.7-2.7l1.7-1.7c0.6,1.3,1,2.8,1,4.4c0,5.5-4.5,10-10,10l-4-4l4-4V19z"/></svg>',
+            "wall": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M3,6h18v12H3V6z M7,10h2v4H7V10z M11,10h2v4h-2V10z M15,10h2v4h-2V10z"/></svg>',
+            "door": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M19,3h-9C8.3,3,7,4.3,7,6v12c0,1.7,1.3,3,3,3h9V3z M13,15c-0.6,0-1-0.4-1-1s0.4-1,1-1s1,0.4,1,1S13.6,15,13,15z"/></svg>',
+            "window": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M3,3h18v18H3V3z M17,17V7H7v10H17z M5,5h2v2H5V5z M5,17h2v2H5V17z M17,5h2v2h-2V5z M17,17h2v2h-2V17z"/></svg>',
+            "light-spot": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M6.4,6.4L2,5l1.4,4.4L6.4,6.4z M17.6,6.4L20.6,5l-1.4,4.4L17.6,6.4z M12,4c-5,0-9,4-9,9c0,3.9,2.5,7.2,6,8.4V22h6v-0.6c3.5-1.2,6-4.5,6-8.4C21,8,17,4,12,4z M12,19c-3.3,0-6-2.7-6-6c0-3.3,2.7-6,6-6s6,2.7,6,6C18,16.3,15.3,19,12,19z M12,9c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4s4-1.8,4-4C16,10.8,14.2,9,12,9z"/></svg>',
+            "light-flood": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M10,2v2h4V2H10z M10,20v2h4v-2H10z M4,10h2v4H4V10z M18,10h2v4h-2V10z M17,8l1.4-1.4L17,5.2L15.6,6.6L17,8z M7,8L5.6,6.6L7,5.2L8.4,6.6L7,8z M17,16l1.4,1.4L17,18.8l-1.4-1.4L17,16z M7,16l1.4,1.4L7,18.8l-1.4-1.4L7,16z M12,6c-3.3,0-6,2.7-6,6s2.7,6,6,6s6-2.7,6-6S15.3,6,12,6z M12,16c-2.2,0-4-1.8-4-4c0-2.2,1.8-4,4-4s4,1.8,4,4C16,14.2,14.2,16,12,16z"/></svg>',
+            "light-led": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M3,3h18v18H3V3z M5,5v14h14V5H5z M7,7h10v10H7V7z M9,9h6v6H9V9z"/></svg>',
+            "camera": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M9,3L7.2,5H4C2.9,5,2,5.9,2,7v12c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V7c0-1.1-0.9-2-2-2h-3.2L15,3H9z M12,18c-2.8,0-5-2.2-5-5s2.2-5,5-5s5,2.2,5,5S14.8,18,12,18z M12,10c-1.7,0-3,1.3-3,3s1.3,3,3,3s3-1.3,3-3S13.7,10,12,10z"/></svg>',
+            "flag": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M12.4,2l-0.2,6.6L14,8l1.2-6H12.4z M19,8l-7.8-2.6L11,11.4L18.8,14L19,8z M7,2v20h2V2H7z"/></svg>',
+            "floppy": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M5,3h14c1.1,0,2,0.9,2,2v14c0,1.1-0.9,2-2,2H5c-1.1,0-2-0.9-2-2V5C3,3.9,3.9,3,5,3z M12,17c1.7,0,3-1.3,3-3s-1.3-3-3-3s-3,1.3-3,3S10.3,17,12,17z M6,6h9v4H6V6z"/></svg>',
+            "scrim": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M3,3h4v4H3V3z M9,3h4v4H9V3z M15,3h4v4h-4V3z M3,9h4v4H3V9z M9,9h4v4H9V9z M15,9h4v4h-4V9z M3,15h4v4H3V15z M9,15h4v4H9V15z M15,15h4v4h-4V15z"/></svg>',
+            "diffusion": '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#ffffff" d="M2,4h20v16H2V4z M4,6v12h16V6H4z M8,8h8v2H8V8z M8,12h8v2H8V12z M8,16h8v2H8V16z"/></svg>'
+        }
+        
+        return svg_icons.get(tool_id, None)
 
 class ToolCategory(QWidget):
     """Widget for a category of tools."""
