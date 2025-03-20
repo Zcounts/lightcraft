@@ -463,6 +463,10 @@ class ProjectDatabase:
             
             scene_data['data'] = json.dumps(data_json)
             
+            # Make sure thumbnail is included in scene_data
+            if 'thumbnail' not in scene_data:
+                scene_data['thumbnail'] = None
+            
             # Insert scene
             self.cursor.execute('''
             INSERT INTO scenes (id, project_id, name, description, created_at, 
