@@ -535,7 +535,8 @@ class ProjectManager(QObject):
                 self.current_project_id, 
                 self.current_scene_id, 
                 scene_data,
-                f"Auto version at {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+                f"Auto version at {datetime.now().strftime('%Y-%m-%d %H:%M')}",
+                thumbnail=None  # Add this parameter
             )
             
             # Clear auto-save for this scene
