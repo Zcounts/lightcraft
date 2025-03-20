@@ -108,11 +108,8 @@ class MainWindow(QMainWindow):
         # Add vertical splitter to main layout
         self.main_layout.addWidget(self.v_splitter)
 
-        # Initialize project controller
-        self.project_controller = ProjectController(self.scene_controller, self)
-        
-        # Set up project navigator
-        self.setup_project_navigator()
+        # The scene controller and project controller will be initialized by the integration module
+        # See setup_application_components in integration.py
         
         # Connect signals
         self.connect_signals()
