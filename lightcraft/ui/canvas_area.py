@@ -172,13 +172,6 @@ class CanvasArea(QWidget):
             
             event.accept()
     
-    def clear_scene(self):
-        """Clear all items from the scene."""
-        self.scene.clear()
-        
-        # Redraw grid
-        self.scene.draw_grid()
-    
     def add_command_to_stack(self, command):
         """
         Add a command to the undo stack.
@@ -220,7 +213,7 @@ class CanvasArea(QWidget):
         
         # Fit the view to the items
         self.view.fitInView(items_rect, Qt.AspectRatioMode.KeepAspectRatio)
-        
+    
     def clear_scene(self):
         """Clear all items from the scene."""
         if hasattr(self, 'scene'):
@@ -232,6 +225,17 @@ class CanvasArea(QWidget):
             # Redraw grid if needed
             if hasattr(self.scene, 'draw_grid'):
                 self.scene.draw_grid()
+    
+    def set_active_tool(self, tool):
+        """
+        Set the active tool for both scene and view.
+        
+        Args:
+            tool: Tool identifier
+        """
+        self.scene.active_tool = tool
+        self.view.active_tool = tool
+
 
 class LightingScene(QGraphicsScene):
     """
@@ -258,6 +262,9 @@ class LightingScene(QGraphicsScene):
         self.current_item = None
         self.creation_in_progress = False
         self.preview_item = None
+        
+        # Tool controller reference (set externally)
+        self.tool_controller = None
     
     def draw_grid(self):
         """Draw the grid on the background of the scene."""
@@ -321,8 +328,7 @@ class LightingScene(QGraphicsScene):
         """
         # Forward to tool controller if available
         if hasattr(self, 'tool_controller') and self.tool_controller:
-            pos = self.mapToScene(event.pos())
-            self.tool_controller.handle_canvas_move(event, pos)
+            self.tool_controller.handle_canvas_move(event, event.scenePos())
             
         super().mouseMoveEvent(event)
     
@@ -335,32 +341,9 @@ class LightingScene(QGraphicsScene):
         """
         # Forward to tool controller if available
         if hasattr(self, 'tool_controller') and self.tool_controller:
-            pos = self.mapToScene(event.pos())
-            self.tool_controller.handle_canvas_release(event, pos)
-        
-        # Reset drag mode after middle button release
-        if event.button() == Qt.MouseButton.MiddleButton:
-            self.setDragMode(QGraphicsView.DragMode.RubberBandDrag)
+            self.tool_controller.handle_canvas_release(event, event.scenePos())
         
         super().mouseReleaseEvent(event)
-    
-    def set_active_tool(self, tool):
-        """
-        Set the active tool.
-        
-        Args:
-            tool: Tool identifier
-        """
-        self.active_tool = tool
-        
-        # Also set the active tool in the view if available
-        if hasattr(self, 'view') and self.view:
-            self.view.active_tool = tool
-        
-        # Clear any preview item if tool changes
-        if hasattr(self, 'preview_item') and self.preview_item:
-            self.removeItem(self.preview_item)
-            self.preview_item = None
     
     def start_item_creation(self, pos, item_type):
         """
@@ -505,10 +488,7 @@ class LightingView(QGraphicsView):
         # Enable drag and drop
         self.setAcceptDrops(True)
 
-        # Tool controller reference (set externally)
-        self.tool_controller = None
-
-        # Initialize active_tool
+        # Active tool (should match scene's active tool)
         self.active_tool = "select"
     
     def wheelEvent(self, event):
@@ -540,19 +520,14 @@ class LightingView(QGraphicsView):
         Args:
             event: QMouseEvent instance
         """
-        # Forward to tool controller if available
-        if hasattr(self, 'tool_controller') and self.tool_controller:
-            pos = self.mapToScene(event.pos())
-            self.tool_controller.handle_canvas_press(event, pos)
-            
         # Middle button for panning
         if event.button() == Qt.MouseButton.MiddleButton:
             self.setDragMode(QGraphicsView.DragMode.ScrollHandDrag)
             # Create a temporary event to trick QGraphicsView 
             # into starting drag mode
-            fake_event = event
-            super().mousePressEvent(fake_event)
+            super().mousePressEvent(event)
         else:
+            # Let the scene handle the event
             super().mousePressEvent(event)
     
     def mouseReleaseEvent(self, event):
@@ -570,71 +545,36 @@ class LightingView(QGraphicsView):
     
     def dragEnterEvent(self, event):
         """
-        Handle drag enter events.
+        Handle drag enter events by forwarding to parent CanvasArea.
         
         Args:
             event: QDragEnterEvent
         """
-        # Accept equipment or item drags
-        if event.mimeData().hasFormat("application/x-equipment") or \
-           event.mimeData().hasFormat("application/x-canvas-item"):
-            event.acceptProposedAction()
+        if self.parent() and hasattr(self.parent(), 'dragEnterEvent'):
+            self.parent().dragEnterEvent(event)
+        else:
+            super().dragEnterEvent(event)
     
     def dragMoveEvent(self, event):
         """
-        Handle drag move events.
+        Handle drag move events by forwarding to parent CanvasArea.
         
         Args:
             event: QDragMoveEvent
         """
-        # Accept equipment or item drags
-        if event.mimeData().hasFormat("application/x-equipment") or \
-           event.mimeData().hasFormat("application/x-canvas-item"):
-            event.acceptProposedAction()
+        if self.parent() and hasattr(self.parent(), 'dragMoveEvent'):
+            self.parent().dragMoveEvent(event)
         else:
             super().dragMoveEvent(event)
 
-    def dragLeaveEvent(self, event):
-        """
-        Handle drag leave events.
-        
-        Args:
-            event: QDragLeaveEvent
-        """
-        super().dragLeaveEvent(event)
-    
     def dropEvent(self, event):
         """
-        Handle drop events.
+        Handle drop events by forwarding to parent CanvasArea.
         
         Args:
             event: QDropEvent
         """
-        # Convert the position to scene coordinates
-        pos = self.mapToScene(event.pos())
-        
-        # Forward the drop to the parent widget (CanvasArea)
-        if hasattr(self.parent(), 'dropEvent'):
-            # Create a new event with the scene position
-            mime_data = QMimeData()
-            for format in event.mimeData().formats():
-                mime_data.setData(format, event.mimeData().data(format))
-            
-            # Create a new drop event with the scene position
-            drop_event = event
-            drop_event.setDropAction(event.dropAction())
-            drop_event.setMimeData(mime_data)
-            
-            # Forward to parent
-            self.parent().dropEvent(drop_event)
-            event.acceptProposedAction()
-
-    def mousePressEvent(self, event):
-        """
-        Handle mouse press events.
-        
-        Args:
-            event: QGraphicsSceneMouseEvent
-        """
-        print(f"mousePressEvent: active_tool = {self.active_tool if hasattr(self, 'active_tool') else 'None'}")
-        # Rest of the method...
+        if self.parent() and hasattr(self.parent(), 'dropEvent'):
+            self.parent().dropEvent(event)
+        else:
+            super().dropEvent(event)
