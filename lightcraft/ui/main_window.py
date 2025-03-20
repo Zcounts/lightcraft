@@ -85,15 +85,6 @@ class MainWindow(QMainWindow):
         self.canvas_area = CanvasArea(self)
         self.properties_panel = PropertiesPanel(self)
         self.project_navigator = ProjectNavigator(self)
-
-        # Initialize project controller
-        self.project_controller = ProjectController(self.scene_controller, self)
-                
-        # Set up project navigator
-        self.setup_project_navigator()
-                
-        # Connect signals
-        self.connect_signals()
         
         # Add tool palette and equipment library to left panel
         self.left_panel_splitter = QSplitter(Qt.Orientation.Vertical)
