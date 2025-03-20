@@ -47,7 +47,7 @@ class CanvasArea(QWidget):
         self.layout = QVBoxLayout(self)
         self.layout.setContentsMargins(0, 0, 0, 0)
         
-        # Create scene and view
+        # Create scene first, if not already done
         self.scene = LightingScene(self)
         self.view = LightingView(self.scene, self)
         
