@@ -109,7 +109,14 @@ class ToolController(QObject):
                 "type": tool_info["item_type"],
                 "pos": pos
             })
-    
+            
+        elif tool_info["mode"] == "create":
+            print(f"Emitting create action for {self.active_tool} at {pos}")  # Add this debug print
+            self.tool_action.emit("create", {
+                "type": tool_info["item_type"],
+                "pos": pos
+            })
+            
     def handle_canvas_move(self, event, pos):
         """
         Handle mouse move events on the canvas.
