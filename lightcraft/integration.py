@@ -40,6 +40,7 @@ def setup_controllers(main_window):
     """
     # Make sure canvas_area exists
     if not hasattr(main_window, 'canvas_area') or main_window.canvas_area is None:
+        from lightcraft.ui.canvas_area import CanvasArea
         print("Error: canvas_area is not initialized")
         main_window.canvas_area = CanvasArea(main_window)
         main_window.setCentralWidget(main_window.canvas_area)
