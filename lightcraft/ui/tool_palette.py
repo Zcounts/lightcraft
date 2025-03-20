@@ -61,32 +61,7 @@ class ToolButton(QToolButton):
             }
         """)
         
-    # Generate SVG icon based on tool type
-        self.setIcon(self.create_icon_for_tool(tool_id))
-        self.setIconSize(QSize(24, 24))
-        self.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
-
-    def create_icon_for_tool(self, tool_id):
-            """Create a simple SVG icon based on the tool type."""
-            from PyQt6.QtSvg import QSvgRenderer
-            from PyQt6.QtGui import QPixmap, QPainter
-            
-            # Create a blank pixmap
-            pixmap = QPixmap(24, 24)
-            pixmap.fill(Qt.GlobalColor.transparent)
-            
-            # Get SVG content based on tool ID
-            svg_content = self.get_svg_for_tool(tool_id)
-            
-            if svg_content:
-                # Create painter and render SVG
-                painter = QPainter(pixmap)
-                renderer = QSvgRenderer(svg_content.encode('utf-8'))
-                renderer.render(painter)
-                painter.end()
-            
-            return QIcon(pixmap)
-        
+# Generate SVG icon based on tool type
         def get_svg_for_tool(self, tool_id):
             """Get SVG content for a specific tool."""
             # Simple SVG icons for different tools
