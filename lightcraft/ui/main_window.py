@@ -128,6 +128,9 @@ class MainWindow(QMainWindow):
         navigator_height = int(window_height * PROJECT_NAVIGATOR_HEIGHT / 100)
         
         self.v_splitter.setSizes([main_height, navigator_height])
+
+        # Add project navigator to vertical splitter
+        self.v_splitter.addWidget(self.project_navigator)
         
         # Set up menu bar
         self.setup_menu_bar()
