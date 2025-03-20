@@ -42,6 +42,42 @@ class CanvasItemFactory:
             return WallItem(model_item)
         
         return None
+
+    @staticmethod
+    def create_item(model_item):
+        """
+        Create a canvas item based on the model item type.
+        
+        Args:
+            model_item: The model item to create a canvas item for
+        
+        Returns:
+            CanvasItem: The created canvas item or None if type not recognized
+        """
+        try:
+            if isinstance(model_item, LightingEquipment):
+                return LightItem(model_item)
+            elif isinstance(model_item, Camera):
+                return CameraItem(model_item)
+            elif isinstance(model_item, SetElement):
+                # Choose appropriate visual representation based on element type
+                if hasattr(model_item, 'element_type'):
+                    element_type = model_item.element_type.lower() if model_item.element_type else ""
+                    if element_type in ['wall', 'door', 'window']:
+                        return WallItem(model_item)
+                    elif element_type in ['flag', 'floppy', 'neg', 'scrim', 'cutter', 'diffusion']:
+                        return ModifierItem(model_item)
+                
+                # Default to wall for other set elements
+                return WallItem(model_item)
+            
+            print(f"Warning: Unknown model item type: {type(model_item)}")
+            return None
+        except Exception as e:
+            print(f"Error creating canvas item: {e}")
+            import traceback
+            traceback.print_exc()
+            return None
     
     @staticmethod
     def create_from_type(item_type, model_item=None):
