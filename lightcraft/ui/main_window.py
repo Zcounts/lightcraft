@@ -6,7 +6,7 @@ Contains the primary UI layout and panel organization.
 from PyQt6.QtWidgets import (
     QMainWindow, QSplitter, QVBoxLayout, QHBoxLayout, 
     QWidget, QDockWidget, QMenuBar, QToolBar, QStatusBar, 
-    QApplication, QMenu, QMessageBox, QFileDialog, QInputDialog
+    QApplication, QMenu, QMessageBox, QFileDialog, QInputDialog, QLineEdit
 )
 from PyQt6.QtCore import Qt, QSize, QSettings
 from PyQt6.QtGui import QAction, QIcon
