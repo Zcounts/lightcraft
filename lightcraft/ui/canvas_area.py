@@ -295,9 +295,6 @@ class LightingScene(QGraphicsScene):
         Args:
             event: QGraphicsSceneMouseEvent
         """
-        # Print active tool for debugging
-        print(f"Mouse press with tool: {self.active_tool}")
-        
         # If we're creating an item or using any tool, handle it
         if hasattr(self, 'active_tool') and self.active_tool:
             # For create tools
