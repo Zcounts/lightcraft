@@ -75,7 +75,7 @@ class CanvasArea(QWidget):
         self.scene.draw_grid()
         
         # Set view settings
-        self.view.setRenderHint(self.view.renderHints().RenderHint.Antialiasing)
+        self.view.setRenderHint(QPainter.RenderHint.Antialiasing)
         self.view.setDragMode(QGraphicsView.DragMode.RubberBandDrag)
         
         # Enable drops
