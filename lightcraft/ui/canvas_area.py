@@ -210,7 +210,18 @@ class CanvasArea(QWidget):
         
         # Fit the view to the items
         self.view.fitInView(items_rect, Qt.AspectRatioMode.KeepAspectRatio)
-
+        
+    def clear_scene(self):
+        """Clear all items from the scene."""
+        if hasattr(self, 'scene'):
+            # Keep grid lines but remove other items
+            for item in self.scene.items():
+                if not (isinstance(item, QGraphicsRectItem) and item.data(0) == "grid_line"):
+                    self.scene.removeItem(item)
+            
+            # Redraw grid if needed
+            if hasattr(self.scene, 'draw_grid'):
+                self.scene.draw_grid()
 
 class LightingScene(QGraphicsScene):
     """
