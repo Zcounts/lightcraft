@@ -127,6 +127,15 @@ class CanvasArea(QWidget):
             event.acceptProposedAction()
         else:
             super().dragMoveEvent(event)
+            
+    def dragLeaveEvent(self, event):
+        """
+        Handle drag leave events.
+        
+        Args:
+            event: QDragLeaveEvent
+        """
+        super().dragLeaveEvent(event)
 
     def dropEvent(self, event):
         """
@@ -567,6 +576,18 @@ class LightingView(QGraphicsView):
         else:
             super().dragMoveEvent(event)
 
+    def dragLeaveEvent(self, event):
+        """
+        Handle drag leave events by forwarding to parent CanvasArea.
+        
+        Args:
+            event: QDragLeaveEvent
+        """
+        if self.parent() and hasattr(self.parent(), 'dragLeaveEvent'):
+            self.parent().dragLeaveEvent(event)
+        else:
+            super().dragLeaveEvent(event)
+    
     def dropEvent(self, event):
         """
         Handle drop events by forwarding to parent CanvasArea.
