@@ -102,6 +102,18 @@ class SceneController(QObject):
             return False
         
         return self.project.save(file_path)
+
+    def new_scene(self, name):
+        """Create a new empty scene."""
+        from lightcraft.models.scene import Scene
+        
+        # Create new scene
+        self.current_scene = Scene(name=name)
+        
+        # Emit scene changed signal
+        self.scene_changed.emit()
+        
+        return self.current_scene
     
     def set_current_scene(self, scene_id):
         """
