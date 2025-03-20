@@ -144,4 +144,4 @@ def finalize_setup(main_window):
     
     # Update status bar
     if hasattr(main_window, 'statusBar'):
-        main_window.statusBar().showMessage("Ready", 3000)
+        main_window.statusBar.showMessage("Ready", 3000)
