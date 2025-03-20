@@ -467,7 +467,9 @@ def get_equipment_icon_path(equipment_id):
     if equipment and "icon" in equipment:
         return os.path.join(ICONS_DIR, equipment["icon"])
     return None
-    },
+    }
+# Add the remaining equipment items to the library
+    EQUIPMENT_LIBRARY.update({
     "fresnel_300w": {
         "name": "300W Fresnel",
         "category": "lights",
