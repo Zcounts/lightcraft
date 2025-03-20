@@ -10,6 +10,11 @@ import traceback
 # Add the parent directory to the path so we can import lightcraft
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
+from PyQt6.QtWidgets import QApplication
+
+# Create QApplication before importing any modules that might create QWidgets
+app = QApplication(sys.argv)
+
 def handle_exception(exc_type, exc_value, exc_tb):
     """Handle unhandled exceptions by showing an error message."""
     print("An unexpected error occurred:")
@@ -21,7 +26,7 @@ try:
     # Import and run the main function
     from main import main
     sys.excepthook = handle_exception
-    main()
+    main(app)  # Pass the app to main
 except ImportError as e:
     print(f"Error importing modules: {e}")
     print("Make sure all required packages are installed.")
