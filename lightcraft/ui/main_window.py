@@ -103,7 +103,7 @@ class MainWindow(QMainWindow):
         # Vertical splitter for main content and project navigator
         self.v_splitter = QSplitter(Qt.Orientation.Vertical)
         self.v_splitter.addWidget(self.h_splitter)
-        self.v_splitter.addWidget(self.project_navigator)
+        # Don't add the project navigator here, it will be added later
         
         # Add vertical splitter to main layout
         self.main_layout.addWidget(self.v_splitter)
