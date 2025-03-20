@@ -463,10 +463,39 @@ def get_equipment_icon_path(equipment_id):
     from lightcraft.config import ICONS_DIR
     import os
     
+    # Try to get the specific icon from equipment data
     equipment = get_equipment_by_id(equipment_id)
     if equipment and "icon" in equipment:
-        return os.path.join(ICONS_DIR, equipment["icon"])
-    return None
+        icon_path = os.path.join(ICONS_DIR, equipment["icon"])
+        if os.path.exists(icon_path):
+            return icon_path
+    
+    # If no specific icon, create category-based filename
+    if equipment and "category" in equipment and "subcategory" in equipment:
+        category = equipment["category"]
+        subcategory = equipment["subcategory"]
+        icon_name = f"{category}_{subcategory}.svg"
+        icon_path = os.path.join(ICONS_DIR, icon_name)
+        if os.path.exists(icon_path):
+            return icon_path
+    
+    # Fall back to placeholder
+    placeholder_path = os.path.join(ICONS_DIR, "placeholder.svg")
+    if os.path.exists(placeholder_path):
+        return placeholder_path
+    
+    # Create placeholder directory and file if needed
+    try:
+        os.makedirs(ICONS_DIR, exist_ok=True)
+        placeholder_content = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <rect width="48" height="48" fill="#555555" rx="8" ry="8"/>
+  <text x="24" y="30" font-family="Arial" font-size="24" fill="white" text-anchor="middle">?</text>
+</svg>'''
+        with open(placeholder_path, 'w') as f:
+            f.write(placeholder_content)
+        return placeholder_path
+    except:
+        return None
     
 # Add the remaining equipment items to the library
 EQUIPMENT_LIBRARY.update({
