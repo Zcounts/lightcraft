@@ -58,8 +58,8 @@ class ProjectController(QObject):
         self._init_auto_save()
 
         # Current project and scene tracking
-                self.current_project_id = None
-                self.current_file_path = None
+        self.current_project_id = None
+        self.current_file_path = None
     
     def _init_auto_save(self):
         """Initialize auto-save timer."""
