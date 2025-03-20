@@ -10,7 +10,7 @@ from PyQt6.QtWidgets import (
     QSplitter, QMenu, QMessageBox, QDialog, QFormLayout,
     QDialogButtonBox, QSpinBox, QDoubleSpinBox, QColorDialog
 )
-from PyQt6.QtCore import Qt, pyqtSignal, QSize, QEvent
+from PyQt6.QtCore import Qt, pyqtSignal, QSize, QMimeData, QPoint
 from PyQt6.QtGui import QIcon, QPixmap, QDrag, QCursor, QColor
 
 import os
