@@ -326,3 +326,17 @@ class SceneController(QObject):
         """Clear the current selection."""
         self.selected_items = []
         self.item_selected.emit(None)
+
+    def clear_scene(self):
+        """Clear the current scene."""
+        # Remove all items
+        self.selected_items = []
+        
+        # Reset current scene
+        self.current_scene = None
+        
+        # Create new empty scene
+        self.new_scene("Empty Scene")
+        
+        # Emit scene changed signal
+        self.scene_changed.emit()
