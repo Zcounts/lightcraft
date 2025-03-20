@@ -85,8 +85,11 @@ class EquipmentController(QObject):
             
             tool_layout.addWidget(v_splitter)
             
-            # Replace tool palette with the container
-            h_splitter.replaceWidget(tool_palette_index, tool_container)
+            # Replace tool palette with the container, only if index exists
+            if tool_palette_index >= 0:
+                h_splitter.replaceWidget(tool_palette_index, tool_container)
+            else:
+                h_splitter.addWidget(tool_container)
             
             # Replace properties panel with our enhanced version
             h_splitter.replaceWidget(properties_panel_index, self.properties_panel)
