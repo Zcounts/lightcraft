@@ -467,7 +467,6 @@ def get_equipment_icon_path(equipment_id):
     if equipment and "icon" in equipment:
         return os.path.join(ICONS_DIR, equipment["icon"])
     return None
- "fresnel_small.png"
     },
     "fresnel_300w": {
         "name": "300W Fresnel",
