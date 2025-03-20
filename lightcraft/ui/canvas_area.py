@@ -8,6 +8,7 @@ from PyQt6.QtWidgets import (
     QGraphicsItem, QGraphicsItemGroup, QGraphicsRectItem,
     QGraphicsTextItem, QStyleOptionGraphicsItem, QGraphicsSceneMouseEvent
 )
+from PyQt6.QtGui import QPainter
 from PyQt6.QtGui import QUndoStack
 from PyQt6.QtGui import QUndoCommand
 from PyQt6.QtCore import Qt, QRectF, QPointF, pyqtSignal, QSize, QMimeData
@@ -451,7 +452,7 @@ class LightingView(QGraphicsView):
         super().__init__(scene, parent)
         
         # View settings
-        self.setRenderHint(self.renderHints().RenderHint.Antialiasing)
+        self.setRenderHint(QPainter.RenderHint.Antialiasing)
         self.setViewportUpdateMode(
             QGraphicsView.ViewportUpdateMode.FullViewportUpdate
         )
