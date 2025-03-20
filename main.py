@@ -31,14 +31,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-try:
-    app = Application(sys.argv)
-    exit_code = app.run()
-    sys.exit(exit_code)
-except Exception as e:
-    print(f"Fatal error: {e}")
-    import traceback
-    traceback.print_exc()
-    input("Press Enter to exit...")
-    sys.exit(1)
