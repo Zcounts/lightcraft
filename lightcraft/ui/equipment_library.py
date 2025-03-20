@@ -12,6 +12,7 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtCore import Qt, pyqtSignal, QSize, QMimeData, QPoint
 from PyQt6.QtGui import QIcon, QPixmap, QDrag, QCursor, QColor
+from PyQt6.QtGui import QPainter, QBrush, QPen, QColor
 
 import os
 from lightcraft.models.equipment_data import (
@@ -43,9 +44,30 @@ class EquipmentItem(QListWidgetItem):
         self.setText(equipment_data["name"])
         
         # Load icon if available
-        icon_path = get_equipment_icon_path(equipment_id)
-        if icon_path and os.path.exists(icon_path):
-            self.setIcon(QIcon(icon_path))
+                icon_path = get_equipment_icon_path(equipment_id)
+                if icon_path and os.path.exists(icon_path):
+                    # For SVG files
+                    if icon_path.endswith('.svg'):
+                        from PyQt6.QtSvg import QSvgRenderer
+                        pixmap = QPixmap(48, 48)
+                        pixmap.fill(Qt.GlobalColor.transparent)
+                        renderer = QSvgRenderer(icon_path)
+                        painter = QPainter(pixmap)
+                        renderer.render(painter)
+                        painter.end()
+                        self.setIcon(QIcon(pixmap))
+                    else:
+                        self.setIcon(QIcon(icon_path))
+                else:
+                    # Create default icon based on equipment type
+                    pixmap = QPixmap(48, 48)
+                    pixmap.fill(Qt.GlobalColor.transparent)
+                    painter = QPainter(pixmap)
+                    painter.setBrush(QBrush(QColor(equipment_data.get("category", "lights") == "lights" ? "#FFCC00" : "#8899AA")))
+                    painter.setPen(QPen(Qt.GlobalColor.white))
+                    painter.drawEllipse(4, 4, 40, 40)
+                    painter.end()
+                    self.setIcon(QIcon(pixmap))
         
         # Set tooltip with description
         if "description" in equipment_data:
