@@ -79,8 +79,7 @@ def setup_controllers(main_window):
     except Exception as e:
         print(f"Error setting up controllers: {e}")
         import traceback
-        traceback.print_exc()
-        
+        traceback.print_exc()    
 
 def connect_signals(main_window):
     """
@@ -123,7 +122,6 @@ def connect_signals(main_window):
     
     # Connect main window menu actions
     connect_menu_actions(main_window)
-
 
 def connect_menu_actions(main_window):
     """
