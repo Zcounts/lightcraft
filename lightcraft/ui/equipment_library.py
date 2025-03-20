@@ -202,8 +202,10 @@ class EquipmentLibraryPanel(QWidget):
         self.category_tree.itemClicked.connect(self.on_category_selected)
         
         # Connect equipment list selection
-        self.equipment_list.itemClicked.connect(self.on_equipment_selected)
-        self.equipment_list.itemDoubleClicked.connect(self.on_equipment_double_clicked)
+        if not self.equipment_list.receivers(self.equipment_list.itemClicked):
+            self.equipment_list.itemClicked.connect(self.on_equipment_selected)
+        if not self.equipment_list.receivers(self.equipment_list.itemDoubleClicked):
+            self.equipment_list.itemDoubleClicked.connect(self.on_equipment_double_clicked)
         
         # Connect favorites and recent lists
         self.favorites_list.itemClicked.connect(self.on_favorite_selected)
