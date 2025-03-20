@@ -453,6 +453,10 @@ class CanvasController(QObject):
         Returns:
             The created canvas item or None if failed
         """
+        if not self.canvas_area or not self.canvas_area.scene:
+            print("No canvas area or scene available")
+            return None
+            
         try:
             # Import equipment data
             from lightcraft.models.equipment_data import get_equipment_by_id
@@ -899,14 +903,18 @@ class CanvasController(QObject):
             return
         
         # Find canvas item for this model item
+        found_item = None
         for item in self.canvas_area.scene.items():
             if (hasattr(item, 'model_item') and item.model_item and 
                 hasattr(item.model_item, 'id') and hasattr(model_item, 'id') and
                 item.model_item.id == model_item.id):
-                
-                # Update canvas item from model
-                item.update_from_model()
+                found_item = item
                 break
+        
+        if found_item:
+            # Update canvas item from model
+            if hasattr(found_item, 'update_from_model'):
+                found_item.update_from_model()
     
     def undo(self):
         """Undo the last operation."""
