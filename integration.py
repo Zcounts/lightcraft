@@ -94,7 +94,10 @@ def connect_signals(main_window):
     
     # Connect tool controller with canvas controller
     if hasattr(main_window, 'tool_controller') and hasattr(main_window, 'canvas_controller'):
+        print("Connecting tool_controller.tool_action to canvas_controller.handle_tool_action")
         main_window.tool_controller.tool_action.connect(main_window.canvas_controller.handle_tool_action)
+    else:
+        print("Warning: Cannot connect tool_controller to canvas_controller")
     
     # Connect canvas controller with scene controller
     if hasattr(main_window, 'canvas_controller') and hasattr(main_window, 'scene_controller'):
