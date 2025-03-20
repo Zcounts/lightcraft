@@ -264,6 +264,14 @@ class ProjectNavigator(QWidget):
                 
             # Emit signal to save project to file
             self.project_file_saved.emit(file_path)
+
+    def on_save_project(self):
+        """Handle save project action."""
+        if self.project_manager and self.project_manager.current_project_id:
+            self.project_saved.emit(self.project_manager.current_project_id)
+        else:
+            # If no project is open, do a save as
+            self.on_save_project_as()
     
     def on_close_project(self):
         """Handle close project action."""
