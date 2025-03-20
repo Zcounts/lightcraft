@@ -112,7 +112,8 @@ def connect_menu_actions(main_window):
         main_window.open_action.triggered.connect(main_window.on_open_project)
     
     if hasattr(main_window, 'save_action'):
-        main_window.save_action.triggered.connect(main_window.on_save_project)
+        if hasattr(main_window, 'on_save_project'):
+            main_window.save_action.triggered.connect(main_window.on_save_project)
     
     if hasattr(main_window, 'save_as_action'):
         main_window.save_as_action.triggered.connect(main_window.on_save_project_as)
