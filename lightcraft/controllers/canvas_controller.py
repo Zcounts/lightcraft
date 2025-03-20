@@ -207,10 +207,6 @@ class CanvasController(QObject):
         elif action == "create":
             self.start_create_item(data.get("type"), data.get("pos"))
         
-        # Handle update create action
-        elif action == "update_create":
-            self.update_create_item(data.get("type"), data.get("pos"))
-        
         # Handle end create action
         elif action == "end_create":
             self.finish_create_item(data.get("type"), data.get("pos"))
@@ -218,10 +214,6 @@ class CanvasController(QObject):
         # Handle update create action
         elif action == "update_create":
             self.update_create_item(data.get("type"), data.get("pos"))
-        
-        # Handle end create action
-        elif action == "end_create":
-            self.finish_create_item(data.get("type"), data.get("pos"))
         
         # Handle select at position
         elif action == "select_at":
