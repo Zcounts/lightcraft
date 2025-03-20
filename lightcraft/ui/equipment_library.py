@@ -59,11 +59,11 @@ class EquipmentItem(QListWidgetItem):
                     else:
                         self.setIcon(QIcon(icon_path))
                 else:
-                    # Create default icon based on equipment type
                     pixmap = QPixmap(48, 48)
                     pixmap.fill(Qt.GlobalColor.transparent)
                     painter = QPainter(pixmap)
-                    painter.setBrush(QBrush(QColor(equipment_data.get("category", "lights") == "lights" ? "#FFCC00" : "#8899AA")))
+                    color = "#FFCC00" if equipment_data.get("category", "lights") == "lights" else "#8899AA"
+                    painter.setBrush(QBrush(QColor(color)))
                     painter.setPen(QPen(Qt.GlobalColor.white))
                     painter.drawEllipse(4, 4, 40, 40)
                     painter.end()
