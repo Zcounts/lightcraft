@@ -44,6 +44,9 @@ class ProjectDatabase:
     def connect(self):
         """Connect to the SQLite database."""
         try:
+            # Ensure the data directory exists
+            os.makedirs(os.path.dirname(self.db_file), exist_ok=True)
+            
             self.conn = sqlite3.connect(self.db_file)
             self.conn.row_factory = sqlite3.Row  # Access columns by name
             self.cursor = self.conn.cursor()
