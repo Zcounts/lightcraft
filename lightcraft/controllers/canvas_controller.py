@@ -205,47 +205,55 @@ class CanvasController(QObject):
         
         # Handle create action
         elif action == "create":
-            self.start_create_item(data.get("type"), data.get("pos"))
+            if "type" in data and "pos" in data:
+                self.start_create_item(data["type"], data["pos"])
         
         # Handle end create action
         elif action == "end_create":
-            self.finish_create_item(data.get("type"), data.get("pos"))
-
+            if "type" in data and "pos" in data:
+                self.finish_create_item(data["type"], data["pos"])
+    
         # Handle update create action
         elif action == "update_create":
-            self.update_create_item(data.get("type"), data.get("pos"))
+            if "type" in data and "pos" in data:
+                self.update_create_item(data["type"], data["pos"])
         
         # Handle select at position
         elif action == "select_at":
-            self.select_at_position(data.get("pos"))
+            if "pos" in data:
+                self.select_at_position(data["pos"])
         
         # Handle start area select
         elif action == "start_area_select":
-            if hasattr(self.canvas_area, 'view'):
+            if "pos" in data and hasattr(self.canvas_area, 'view'):
                 self.canvas_area.view.setDragMode(self.canvas_area.view.DragMode.RubberBandDrag)
-            self.start_area_select(data.get("pos"))
+                self.start_area_select(data["pos"])
         
         # Handle update area select
         elif action == "update_area_select":
-            self.update_area_select(data.get("pos"))
+            if "pos" in data:
+                self.update_area_select(data["pos"])
         
         # Handle end area select
         elif action == "end_area_select":
-            if hasattr(self.canvas_area, 'view'):
+            if "pos" in data and hasattr(self.canvas_area, 'view'):
                 self.canvas_area.view.setDragMode(self.canvas_area.view.DragMode.NoDrag)
-            self.finish_area_select(data.get("pos"))
+                self.finish_area_select(data["pos"])
         
         # Handle start rotation
         elif action == "start_rotate":
-            self.start_rotate_items(data.get("pos"))
+            if "pos" in data:
+                self.start_rotate_items(data["pos"])
         
         # Handle update rotation
         elif action == "update_rotate":
-            self.update_rotate_items(data.get("pos"))
+            if "pos" in data:
+                self.update_rotate_items(data["pos"])
         
         # Handle end rotation
         elif action == "end_rotate":
-            self.finish_rotate_items(data.get("pos"))
+            if "pos" in data:
+                self.finish_rotate_items(data["pos"])
         
         # Handle delete
         elif action == "delete":
@@ -253,7 +261,8 @@ class CanvasController(QObject):
         
         # Handle movement
         elif action == "move_selection":
-            self.move_selection(data.get("pos"))
+            if "pos" in data:
+                self.move_selection(data["pos"])
     
     def create_new_item(self, item_type, position, properties=None):
         """
