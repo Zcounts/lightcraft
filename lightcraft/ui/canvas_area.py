@@ -645,3 +645,13 @@ class LightingView(QGraphicsView):
             # Forward to parent
             self.parent().dropEvent(drop_event)
             event.acceptProposedAction()
+
+    def mousePressEvent(self, event):
+        """
+        Handle mouse press events.
+        
+        Args:
+            event: QGraphicsSceneMouseEvent
+        """
+        print(f"mousePressEvent: active_tool = {self.active_tool if hasattr(self, 'active_tool') else 'None'}")
+        # Rest of the method...
