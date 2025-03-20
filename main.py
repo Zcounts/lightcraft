@@ -15,11 +15,11 @@ def handle_exception(exc_type, exc_value, exc_traceback):
     print("\nPlease report this error to the developers.")
     input("Press Enter to exit...")
 
-def main():
+def main(existing_app=None):
     """Main entry point for the LightCraft application."""
     sys.excepthook = handle_exception
     try:
-        app = Application(sys.argv)
+        app = Application(sys.argv, existing_app)
         exit_code = app.run()
         sys.exit(exit_code)
     except Exception as e:
