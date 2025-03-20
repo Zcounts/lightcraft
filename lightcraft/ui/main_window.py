@@ -145,6 +145,20 @@ class MainWindow(QMainWindow):
         
         # Set window size
         self.resize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT)
+
+    def clear_scene(self):
+        """Clear the current scene."""
+        # Remove all items
+        self.selected_items = []
+        
+        # Reset current scene
+        self.current_scene = None
+        
+        # Create new empty scene
+        self.new_scene("Empty Scene")
+        
+        # Emit scene changed signal
+        self.scene_changed.emit()
     
     def setup_menu_bar(self):
         """Set up the application menu bar."""
