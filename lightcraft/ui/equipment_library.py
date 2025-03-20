@@ -743,10 +743,9 @@ class EquipmentLibraryPanel(QWidget):
         drag = QDrag(self)
         
         # Create mime data with equipment info
-        mime_data = item.equipment_id
-        drag.setMimeData({
-            "application/x-equipment": mime_data.encode()
-        })
+        mime_data = QMimeData()
+        mime_data.setData("application/x-equipment", item.equipment_id.encode())
+        drag.setMimeData(mime_data)
         
         # Set drag icon
         icon_path = get_equipment_icon_path(item.equipment_id)
