@@ -37,6 +37,10 @@ class Application:
         
         for directory in [APP_DATA_DIR, RESOURCES_DIR, ICONS_DIR, STYLES_DIR]:
             os.makedirs(directory, exist_ok=True)
+
+        # Ensure project manager database exists and is initialized
+        from lightcraft.models.project_db import ProjectDatabase
+        db = ProjectDatabase()
         
         # Set up application settings
         self.settings = QSettings(ORGANIZATION_NAME, APP_NAME)
