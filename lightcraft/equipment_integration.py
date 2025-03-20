@@ -125,12 +125,12 @@ class EquipmentController(QObject):
         # Convert global position to scene coordinates
         if hasattr(self.main_window, 'canvas_area') and self.main_window.canvas_area:
             canvas_view = self.main_window.canvas_area.view
-            scene_pos = canvas_view.mapToScene(
-                canvas_view.mapFromGlobal(position)
-            )
+            canvas_pos = canvas_view.mapFromGlobal(position)
+            scene_pos = canvas_view.mapToScene(canvas_pos)
             
-            # Forward to canvas controller to handle the equipment drop
-            self.canvas_controller.handle_equipment_drop(equipment_id, scene_pos)
+            # Forward to canvas controller
+            if self.canvas_controller:
+                self.canvas_controller.handle_equipment_drop(equipment_id, scene_pos)
     
     def on_property_changed(self, property_name, value):
         """
