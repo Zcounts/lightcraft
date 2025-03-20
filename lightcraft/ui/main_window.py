@@ -399,7 +399,13 @@ class MainWindow(QMainWindow):
         # Call parent implementation
         super().keyPressEvent(event)
 
-    # Add this to the existing MainWindow.__init__ function:
+    def setup_project_navigator(self):
+        """Set up the project navigator panel."""
+        if self.scene_controller is None:
+            self.scene_controller = SceneController(self)
+            
+        if self.project_controller is None:
+            self.project_controller = ProjectController(self.scene_controller, self)
     
     # Initialize project controller
     self.project_controller = ProjectController(self.scene_controller, self)
