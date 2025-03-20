@@ -24,6 +24,17 @@ RESOURCES_DIR = os.path.join(BASE_DIR, 'lightcraft', 'resources')
 ICONS_DIR = os.path.join(RESOURCES_DIR, 'icons')
 STYLES_DIR = os.path.join(RESOURCES_DIR, 'styles')
 
+# Application data directory
+import os
+APP_DATA_DIR = os.path.join(os.path.expanduser("~"), ".lightcraft")
+
+# Database file
+DATABASE_FILE = os.path.join(APP_DATA_DIR, "lightcraft.db")
+
+# Auto-save settings
+AUTO_SAVE_ENABLED = True
+AUTO_SAVE_INTERVAL = 300  # seconds (5 minutes)
+
 # Default style
 DEFAULT_STYLE = os.path.join(STYLES_DIR, 'default.qss')
 
