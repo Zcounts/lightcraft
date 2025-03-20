@@ -278,9 +278,14 @@ class MainWindow(QMainWindow):
         # Set project controller
         self.project_controller.set_project_navigator(self.project_navigator)
         
-        # Replace the existing project navigator with our enhanced version
-        if hasattr(self, 'v_splitter') and hasattr(self, 'project_navigator'):
-            self.v_splitter.replaceWidget(1, self.project_navigator)
+        # Add the project navigator to the vertical splitter
+        if hasattr(self, 'v_splitter'):
+            self.v_splitter.addWidget(self.project_navigator)
+            
+            # Set sizes with emphasis on the main content
+            main_height = int(self.height() * 0.8)  # 80% for main content
+            navigator_height = int(self.height() * 0.2)  # 20% for navigator
+            self.v_splitter.setSizes([main_height, navigator_height])
         
     def connect_signals(self):
         """Connect signals for application components."""
