@@ -44,7 +44,11 @@ class ProjectDatabase:
     def connect(self):
         """Connect to the SQLite database."""
         try:
-            # Ensure the data directory exists
+            # Ensure the app data directory exists
+            if not os.path.exists(APP_DATA_DIR):
+                os.makedirs(APP_DATA_DIR, exist_ok=True)
+                
+            # Ensure the database directory exists
             os.makedirs(os.path.dirname(self.db_file), exist_ok=True)
             
             self.conn = sqlite3.connect(self.db_file)
