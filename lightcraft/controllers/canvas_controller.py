@@ -508,6 +508,7 @@ class CanvasController(QObject):
             
             # Add create command to undo stack
             if hasattr(self.canvas_area, 'add_command_to_stack'):
+                from lightcraft.controllers.canvas_controller import ItemCreateCommand
                 self.canvas_area.add_command_to_stack(
                     ItemCreateCommand(self, canvas_item, f"Add equipment {model_item.name}")
                 )
