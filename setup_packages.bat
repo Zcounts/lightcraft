@@ -1,5 +1,8 @@
 @echo off
 echo Installing required packages...
-pip install -r requirements.txt
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+echo.
 echo Done! You can now run LightCraft using Launch_LightCraft.bat
+echo.
 pause
