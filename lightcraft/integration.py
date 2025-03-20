@@ -54,6 +54,10 @@ def setup_controllers(main_window):
         # Initialize tool controller (interacts with canvas)
         main_window.tool_controller = ToolController(main_window.canvas_area, main_window)
         main_window.tool_controller.canvas_controller = main_window.canvas_controller
+
+        # Connect tool controller to canvas view
+        if hasattr(main_window.canvas_area, 'view'):
+            main_window.canvas_area.view.tool_controller = main_window.tool_controller   
         
         # Initialize project controller (depends on scene controller)
         main_window.project_controller = ProjectController(main_window.scene_controller, main_window)
