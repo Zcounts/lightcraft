@@ -4,7 +4,8 @@ Manages interactions between tools and the canvas area.
 """
 
 from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot, Qt, QPointF, QMimeData
-from PyQt6.QtWidgets import QApplication, QGraphicsItem, QUndoCommand
+from PyQt6.QtWidgets import QApplication, QGraphicsItem
+from PyQt6.QtGui import QUndoCommand
 from PyQt6.QtGui import QTransform, QDrag
 
 from lightcraft.models.equipment import LightingEquipment, Camera, SetElement
