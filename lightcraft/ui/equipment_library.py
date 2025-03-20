@@ -44,6 +44,8 @@ class EquipmentItem(QListWidgetItem):
         self.setText(equipment_data["name"])
         
         # Load icon if available
+# Change from:
+        # Load icon if available
                 icon_path = get_equipment_icon_path(equipment_id)
                 if icon_path and os.path.exists(icon_path):
                     # For SVG files
@@ -68,6 +70,33 @@ class EquipmentItem(QListWidgetItem):
                     painter.drawEllipse(4, 4, 40, 40)
                     painter.end()
                     self.setIcon(QIcon(pixmap))
+
+# To:
+        # Load icon if available
+        icon_path = get_equipment_icon_path(equipment_id)
+        if icon_path and os.path.exists(icon_path):
+            # For SVG files
+            if icon_path.endswith('.svg'):
+                from PyQt6.QtSvg import QSvgRenderer
+                pixmap = QPixmap(48, 48)
+                pixmap.fill(Qt.GlobalColor.transparent)
+                renderer = QSvgRenderer(icon_path)
+                painter = QPainter(pixmap)
+                renderer.render(painter)
+                painter.end()
+                self.setIcon(QIcon(pixmap))
+            else:
+                self.setIcon(QIcon(icon_path))
+        else:
+            pixmap = QPixmap(48, 48)
+            pixmap.fill(Qt.GlobalColor.transparent)
+            painter = QPainter(pixmap)
+            color = "#FFCC00" if equipment_data.get("category", "lights") == "lights" else "#8899AA"
+            painter.setBrush(QBrush(QColor(color)))
+            painter.setPen(QPen(Qt.GlobalColor.white))
+            painter.drawEllipse(4, 4, 40, 40)
+            painter.end()
+            self.setIcon(QIcon(pixmap))
         
         # Set tooltip with description
         if "description" in equipment_data:
