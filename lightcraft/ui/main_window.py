@@ -258,7 +258,10 @@ class MainWindow(QMainWindow):
         redo_btn = QAction(QIcon(), "Redo", self)
         redo_btn.triggered.connect(lambda: self.canvas_controller.redo() if self.canvas_controller else None)
         toolbar.addAction(redo_btn)
-    
+
+    toolbar = QToolBar("Main Toolbar")
+    toolbar.setObjectName("MainToolbar")  # Add this line
+
     def load_settings(self):
         """Load user settings."""
         # Window geometry
