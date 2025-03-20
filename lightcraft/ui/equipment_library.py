@@ -739,6 +739,9 @@ class EquipmentLibraryPanel(QWidget):
         Args:
             item: EquipmentItem to drag
         """
+        if not hasattr(item, 'equipment_id') or not hasattr(item, 'equipment_data'):
+            return
+            
         # Create drag object
         drag = QDrag(self)
         
