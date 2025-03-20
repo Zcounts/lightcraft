@@ -442,16 +442,59 @@ class CanvasController(QObject):
         """
         try:
             # Import equipment factory
-            from lightcraft.equipment_factory import EquipmentFactory
+            from lightcraft.models.equipment_data import get_equipment_by_id
+            from lightcraft.models.equipment import LightingEquipment, Camera, SetElement
             
-            # Create equipment object from data
-            model_item = EquipmentFactory.create_equipment_from_data(equipment_id, (position.x(), position.y()))
-            if not model_item:
+            # Get equipment data
+            equipment_data = get_equipment_by_id(equipment_id)
+            if not equipment_data:
+                print(f"Could not find equipment with ID: {equipment_id}")
                 return None
+                
+            # Create appropriate model item based on category
+            model_item = None
+            category = equipment_data.get('category', '')
+            
+            if category == 'lights':
+                model_item = LightingEquipment(name=equipment_data.get('name', 'New Light'))
+                # Set light properties
+                if 'properties' in equipment_data:
+                    props = equipment_data['properties']
+                    for key, value in props.items():
+                        if hasattr(model_item, key):
+                            setattr(model_item, key, value)
+            elif category == 'camera':
+                model_item = Camera(name=equipment_data.get('name', 'New Camera'))
+                # Set camera properties
+                if 'properties' in equipment_data:
+                    props = equipment_data['properties']
+                    for key, value in props.items():
+                        if hasattr(model_item, key):
+                            setattr(model_item, key, value)
+            elif category in ['set', 'grip']:
+                element_type = 'Wall'
+                if equipment_data.get('subcategory') == 'control':
+                    element_type = equipment_data.get('name', 'Flag').split(' ')[0]
+                model_item = SetElement(name=equipment_data.get('name', 'New Element'), element_type=element_type)
+                # Set element properties
+                if 'properties' in equipment_data:
+                    props = equipment_data['properties']
+                    for key, value in props.items():
+                        if hasattr(model_item, key):
+                            setattr(model_item, key, value)
+            
+            if not model_item:
+                print(f"Could not create model item for equipment type: {category}")
+                return None
+                
+            # Set position
+            model_item.x = position.x()
+            model_item.y = position.y()
             
             # Create canvas item from model item
             canvas_item = self.item_factory.create_item(model_item)
             if not canvas_item:
+                print(f"Could not create canvas item from model item")
                 return None
             
             # Add item to scene
@@ -469,16 +512,8 @@ class CanvasController(QObject):
                     ItemCreateCommand(self, canvas_item, f"Add equipment {model_item.name}")
                 )
             
-            # For the scene controller to track the item
-            if hasattr(model_item, 'equipment_type'):
-                # This is a light
-                self.item_added.emit(model_item)
-            elif isinstance(model_item, Camera):
-                # This is a camera
-                self.item_added.emit(model_item)
-            elif isinstance(model_item, SetElement):
-                # This is a set element
-                self.item_added.emit(model_item)
+            # Emit item added signal
+            self.item_added.emit(model_item)
             
             # Select the new item
             if self.canvas_area.scene:
@@ -489,6 +524,8 @@ class CanvasController(QObject):
             return canvas_item
         except Exception as e:
             print(f"Error handling equipment drop: {e}")
+            import traceback
+            traceback.print_exc()
             return None
     
     def start_create_item(self, item_type, position):
