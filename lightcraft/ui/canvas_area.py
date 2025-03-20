@@ -109,6 +109,7 @@ class CanvasArea(QWidget):
         # Accept equipment or item drags
         if event.mimeData().hasFormat("application/x-equipment") or \
            event.mimeData().hasFormat("application/x-canvas-item"):
+            event.accept()
             event.acceptProposedAction()
     
     def dragMoveEvent(self, event):
