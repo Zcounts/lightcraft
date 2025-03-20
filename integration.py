@@ -39,29 +39,48 @@ def setup_controllers(main_window):
     Args:
         main_window: The main application window
     """
-    # Initialize scene controller first (manages model data)
-    main_window.scene_controller = SceneController(main_window)
+    # Make sure canvas_area exists
+    if not hasattr(main_window, 'canvas_area') or main_window.canvas_area is None:
+        from lightcraft.ui.canvas_area import CanvasArea
+        print("Warning: canvas_area is not initialized, creating it now")
+        main_window.canvas_area = CanvasArea(main_window)
+        main_window.setCentralWidget(main_window.canvas_area)
     
-    # Initialize canvas controller next (manages view of model data)
-    main_window.canvas_controller = CanvasController(main_window.scene_controller, main_window.canvas_area, main_window)
-    
-    # Initialize tool controller (interacts with canvas)
-    main_window.tool_controller = ToolController(main_window.canvas_area, main_window)
-    main_window.tool_controller.canvas_controller = main_window.canvas_controller
-    
-    # Initialize project controller (depends on scene controller)
-    main_window.project_controller = ProjectController(main_window.scene_controller, main_window)
-    
-    # Connect project controller with project navigator
-    if hasattr(main_window, 'project_navigator'):
-        main_window.project_controller.set_project_navigator(main_window.project_navigator)
-
-    # Connect tool controller to canvas view and scene
-    if hasattr(main_window.canvas_area, 'view'):
-        main_window.canvas_area.view.tool_controller = main_window.tool_controller
-        if hasattr(main_window.canvas_area, 'scene'):
-            main_window.canvas_area.scene.tool_controller = main_window.tool_controller
-
+    try:
+        # Initialize scene controller first (manages model data)
+        main_window.scene_controller = SceneController(main_window)
+        
+        # Initialize canvas controller next (manages view of model data)
+        main_window.canvas_controller = CanvasController(main_window.scene_controller, main_window.canvas_area, main_window)
+        
+        # Initialize tool controller (interacts with canvas)
+        main_window.tool_controller = ToolController(main_window.canvas_area, main_window)
+        
+        # Connect tool controller to canvas controller
+        main_window.tool_controller.canvas_controller = main_window.canvas_controller
+        
+        # Connect tool controller to canvas view
+        if hasattr(main_window.canvas_area, 'view'):
+            main_window.canvas_area.view.tool_controller = main_window.tool_controller
+            
+            # Make sure the view has a scene reference
+            if hasattr(main_window.canvas_area, 'scene'):
+                main_window.canvas_area.view.setScene(main_window.canvas_area.scene)
+                
+                # Also make sure the scene has a reference to the tool controller
+                main_window.canvas_area.scene.tool_controller = main_window.tool_controller
+        
+        # Initialize project controller (depends on scene controller)
+        main_window.project_controller = ProjectController(main_window.scene_controller, main_window)
+        
+        # Connect project controller with project navigator
+        if hasattr(main_window, 'project_navigator'):
+            main_window.project_controller.set_project_navigator(main_window.project_navigator)
+    except Exception as e:
+        print(f"Error setting up controllers: {e}")
+        import traceback
+        traceback.print_exc()
+        
 
 def connect_signals(main_window):
     """
@@ -81,13 +100,26 @@ def connect_signals(main_window):
     # Connect canvas controller with scene controller
     if hasattr(main_window, 'canvas_controller') and hasattr(main_window, 'scene_controller'):
         main_window.canvas_controller.item_selected.connect(main_window.scene_controller.select_item)
-        main_window.canvas_controller.item_added.connect(main_window.scene_controller.add_item)
+        main_window.canvas_controller.item_added.connect(lambda model_item: 
+            main_window.scene_controller.add_item(
+                "light" if hasattr(model_item, "beam_angle") else 
+                "camera" if hasattr(model_item, "lens_mm") else 
+                "set_element",
+                model_item
+            )
+        )
         main_window.canvas_controller.item_removed.connect(main_window.scene_controller.remove_item)
         main_window.canvas_controller.item_modified.connect(main_window.scene_controller.update_item)
         
         # Connect scene controller back to canvas controller for updates
         main_window.scene_controller.item_modified.connect(main_window.canvas_controller.update_item_on_canvas)
         main_window.scene_controller.scene_changed.connect(main_window.canvas_controller.clear_canvas)
+    
+    # Connect equipment library with canvas controller
+    if hasattr(main_window, 'equipment_library') and hasattr(main_window, 'canvas_controller'):
+        main_window.equipment_library.equipment_dropped.connect(
+            lambda equipment_id, data, pos: main_window.canvas_controller.handle_equipment_drop(equipment_id, pos)
+        )
     
     # Connect main window menu actions
     connect_menu_actions(main_window)
