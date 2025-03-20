@@ -298,6 +298,8 @@ class ProjectManager(QObject):
             return True
         except Exception as e:
             print(f"Error saving project: {e}")
+            import traceback
+            traceback.print_exc()
             return False
     
     def _save_to_file(self, file_path):
