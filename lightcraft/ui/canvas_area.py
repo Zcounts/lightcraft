@@ -123,7 +123,7 @@ class CanvasArea(QWidget):
         if event.mimeData().hasFormat("application/x-equipment") or \
            event.mimeData().hasFormat("application/x-canvas-item"):
             event.acceptProposedAction()
-    
+
     def dropEvent(self, event):
         """
         Handle drop events.
@@ -142,7 +142,11 @@ class CanvasArea(QWidget):
             if hasattr(self, 'canvas_controller') and self.canvas_controller:
                 # The canvas controller will handle creating the appropriate item
                 # based on the equipment data
-                self.canvas_controller.handle_equipment_drop(equipment_id, pos)
+                from lightcraft.models.equipment_data import get_equipment_by_id
+                equipment_data = get_equipment_by_id(equipment_id)
+                if equipment_data:
+                    self.canvas_controller.handle_equipment_drop(equipment_id, pos)
+                    self.statusBar().showMessage(f"Added {equipment_data.get('name', 'item')} to canvas", 3000)
             
             event.acceptProposedAction()
         
