@@ -1150,4 +1150,6 @@ def get_equipment_icon_path(equipment_id):
             "material": "Fabric",
             "equipment_type": "Flag"
         },
-        "icon":
+        "icon": "grip_flag.png"
+    }
+})  # Close both the dictionary and the update() method
