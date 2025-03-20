@@ -81,6 +81,9 @@ class CanvasArea(QWidget):
         # Enable drops
         self.setAcceptDrops(True)
         self.view.setAcceptDrops(True)
+        
+        # Set initial transform (zoom level)
+        self.view.scale(1.0, 1.0)
     
     def connect_signals(self):
         """Connect signals to slots."""
