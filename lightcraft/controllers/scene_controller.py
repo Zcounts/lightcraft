@@ -153,18 +153,48 @@ class SceneController(QObject):
         if not self.current_scene:
             return None
         
+        # Make sure properties is a dictionary
+        if properties is None:
+            properties = {}
+        elif not isinstance(properties, dict):
+            # Handle case where properties is an object like LightingEquipment
+            if hasattr(properties, '__dict__'):
+                # It's already an item, just add it to the scene
+                item = properties
+                # Determine category
+                if isinstance(item, LightingEquipment):
+                    category = "lights"
+                elif isinstance(item, Camera):
+                    category = "cameras"
+                elif isinstance(item, SetElement):
+                    category = "set_elements"
+                else:
+                    return None
+                    
+                # Add item to scene
+                self.current_scene.add_item(item, category)
+                
+                # Emit item added signal
+                self.item_added.emit(item)
+                
+                return item
+            else:
+                properties = {}
+        
         # Create the item based on type
         if item_type == "light":
             item = LightingEquipment(
-                name=properties.get("name", "New Light"),
-                equipment_type=properties.get("equipment_type", "Generic")
+                name=properties.get("name", "New Light")
             )
+            if "equipment_type" in properties:
+                item.equipment_type = properties["equipment_type"]
             category = "lights"
         elif item_type == "set_element":
             item = SetElement(
-                name=properties.get("name", "New Set Element"),
-                element_type=properties.get("element_type", "Wall")
+                name=properties.get("name", "New Set Element")
             )
+            if "element_type" in properties:
+                item.element_type = properties["element_type"]
             category = "set_elements"
         elif item_type == "camera":
             item = Camera(name=properties.get("name", "New Camera"))
@@ -183,7 +213,11 @@ class SceneController(QObject):
                 setattr(item, key, value)
         
         # Add item to scene
-        self.current_scene.add_item(item, category)
+        if hasattr(self.current_scene, 'add_item'):
+            self.current_scene.add_item(item, category)
+        elif hasattr(self.current_scene, category):
+            # Alternative way to add item
+            getattr(self.current_scene, category).append(item)
         
         # Emit item added signal
         self.item_added.emit(item)
