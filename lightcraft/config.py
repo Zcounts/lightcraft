@@ -24,6 +24,14 @@ RESOURCES_DIR = os.path.join(BASE_DIR, 'lightcraft', 'resources')
 ICONS_DIR = os.path.join(RESOURCES_DIR, 'icons')
 STYLES_DIR = os.path.join(RESOURCES_DIR, 'styles')
 
+# Ensure resource directories exist
+if not os.path.exists(RESOURCES_DIR):
+    os.makedirs(RESOURCES_DIR, exist_ok=True)
+if not os.path.exists(ICONS_DIR):
+    os.makedirs(ICONS_DIR, exist_ok=True)
+if not os.path.exists(STYLES_DIR):
+    os.makedirs(STYLES_DIR, exist_ok=True)
+
 # Application data directory
 import os
 APP_DATA_DIR = os.path.join(os.path.expanduser("~"), ".lightcraft")
