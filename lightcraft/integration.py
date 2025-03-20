@@ -39,24 +39,27 @@ def setup_controllers(main_window):
     Args:
         main_window: The main application window
     """
-    # Initialize scene controller first (manages model data)
-    main_window.scene_controller = SceneController(main_window)
-    
-    # Initialize canvas controller next (manages view of model data)
-    main_window.canvas_controller = CanvasController(main_window.scene_controller, main_window.canvas_area, main_window)
-    
-    # Initialize tool controller (interacts with canvas)
-    main_window.tool_controller = ToolController(main_window.canvas_area, main_window)
-    
-    # Set canvas controller in tool controller
-    main_window.tool_controller.canvas_controller = main_window.canvas_controller
-    
-    # Initialize project controller (depends on scene controller)
-    main_window.project_controller = ProjectController(main_window.scene_controller, main_window)
-    
-    # Connect project controller with project navigator
-    if hasattr(main_window, 'project_navigator'):
-        main_window.project_controller.set_project_navigator(main_window.project_navigator)
+    try:
+        # Initialize scene controller first (manages model data)
+        main_window.scene_controller = SceneController(main_window)
+        
+        # Initialize canvas controller next (manages view of model data)
+        main_window.canvas_controller = CanvasController(main_window.scene_controller, main_window.canvas_area, main_window)
+        
+        # Initialize tool controller (interacts with canvas)
+        main_window.tool_controller = ToolController(main_window.canvas_area, main_window)
+        main_window.tool_controller.canvas_controller = main_window.canvas_controller
+        
+        # Initialize project controller (depends on scene controller)
+        main_window.project_controller = ProjectController(main_window.scene_controller, main_window)
+        
+        # Connect project controller with project navigator
+        if hasattr(main_window, 'project_navigator'):
+            main_window.project_controller.set_project_navigator(main_window.project_navigator)
+    except Exception as e:
+        print(f"Error setting up controllers: {e}")
+        import traceback
+        traceback.print_exc()
 
 
 def connect_signals(main_window):
