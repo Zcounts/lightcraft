@@ -295,12 +295,20 @@ class LightingScene(QGraphicsScene):
         Args:
             event: QGraphicsSceneMouseEvent
         """
-        # If we're creating an item, start the creation process
-        if self.active_tool.startswith("create_"):
-            self.start_item_creation(event.scenePos(), self.active_tool.split("_")[1])
-            event.accept()
-            return
+        # Print active tool for debugging
+        print(f"Mouse press with tool: {self.active_tool}")
         
+        # If we're creating an item or using any tool, handle it
+        if hasattr(self, 'active_tool') and self.active_tool:
+            # For create tools
+            if self.active_tool.startswith("create_"):
+                self.start_item_creation(event.scenePos(), self.active_tool.split("_")[1])
+                event.accept()
+                return
+            # Forward to tool controller if available
+            elif hasattr(self, 'tool_controller') and self.tool_controller:
+                self.tool_controller.handle_canvas_press(event, event.scenePos())
+                
         # Otherwise, use default behavior
         super().mousePressEvent(event)
     
