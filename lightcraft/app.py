@@ -30,6 +30,13 @@ class Application:
         self.app.setApplicationName(APP_NAME)
         self.app.setOrganizationName(ORGANIZATION_NAME)
         self.app.setApplicationVersion(VERSION)
+
+        # Ensure necessary directories exist
+        import os
+        from lightcraft.config import APP_DATA_DIR, RESOURCES_DIR, ICONS_DIR, STYLES_DIR
+        
+        for directory in [APP_DATA_DIR, RESOURCES_DIR, ICONS_DIR, STYLES_DIR]:
+            os.makedirs(directory, exist_ok=True)
         
         # Set up application settings
         self.settings = QSettings(ORGANIZATION_NAME, APP_NAME)
