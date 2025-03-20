@@ -31,7 +31,6 @@ def setup_application_components(main_window):
     # Final initialization steps
     finalize_setup(main_window)
 
-
 def setup_controllers(main_window):
     """
     Initialize all controllers in the correct order.
@@ -39,6 +38,11 @@ def setup_controllers(main_window):
     Args:
         main_window: The main application window
     """
+    # Make sure canvas_area exists
+    if not hasattr(main_window, 'canvas_area') or main_window.canvas_area is None:
+        print("Error: canvas_area is not initialized")
+        main_window.canvas_area = CanvasArea(main_window)
+        main_window.setCentralWidget(main_window.canvas_area)
     try:
         # Initialize scene controller first (manages model data)
         main_window.scene_controller = SceneController(main_window)
