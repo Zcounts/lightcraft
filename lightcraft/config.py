@@ -32,6 +32,11 @@ if not os.path.exists(ICONS_DIR):
 if not os.path.exists(STYLES_DIR):
     os.makedirs(STYLES_DIR, exist_ok=True)
 
+# Ensure all directories exist
+import os
+for directory in [APP_DATA_DIR, RESOURCES_DIR, ICONS_DIR, STYLES_DIR]:
+    os.makedirs(directory, exist_ok=True)
+
 # Application data directory
 import os
 APP_DATA_DIR = os.path.join(os.path.expanduser("~"), ".lightcraft")
