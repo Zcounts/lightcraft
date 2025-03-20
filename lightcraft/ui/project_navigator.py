@@ -42,7 +42,7 @@ class ProjectNavigator(QWidget):
     # Project signals
     project_created = pyqtSignal(str, str)  # name, description
     project_opened = pyqtSignal(str)        # project_id
-    project_saved = pyqtSignal()
+    project_saved = pyqtSignal(str)  # project_id
     project_closed = pyqtSignal()
     
     # Project file signals
