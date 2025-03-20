@@ -140,14 +140,14 @@ class CanvasArea(QWidget):
             
             # Forward to canvas controller
             if hasattr(self, 'canvas_controller') and self.canvas_controller:
-                # The canvas controller will handle creating the appropriate item
-                # based on the equipment data
+                # Get equipment data
                 from lightcraft.models.equipment_data import get_equipment_by_id
                 equipment_data = get_equipment_by_id(equipment_id)
                 if equipment_data:
                     self.canvas_controller.handle_equipment_drop(equipment_id, pos)
-                    self.statusBar().showMessage(f"Added {equipment_data.get('name', 'item')} to canvas", 3000)
-            
+                    if hasattr(self.parent(), 'statusBar'):
+                        self.parent().statusBar.showMessage(f"Added {equipment_data.get('name', 'item')} to canvas", 3000)
+                
             event.acceptProposedAction()
         
         # Handle canvas item drops (for moving items)
@@ -525,6 +525,19 @@ class LightingView(QGraphicsView):
             super().mousePressEvent(fake_event)
         else:
             super().mousePressEvent(event)
+
+    def dragEnterEvent(self, event):
+        """
+        Handle drag enter events.
+        
+        Args:
+            event: QDragEnterEvent
+        """
+        # Accept equipment drags
+        if event.mimeData().hasFormat("application/x-equipment"):
+            event.accept()
+        else:
+            super().dragEnterEvent(event)
     
     def mouseReleaseEvent(self, event):
         """
