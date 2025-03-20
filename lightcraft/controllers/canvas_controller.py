@@ -441,9 +441,8 @@ class CanvasController(QObject):
             The created canvas item or None if failed
         """
         try:
-            # Import equipment factory
+            # Import equipment data
             from lightcraft.models.equipment_data import get_equipment_by_id
-            from lightcraft.models.equipment import LightingEquipment, Camera, SetElement
             
             # Get equipment data
             equipment_data = get_equipment_by_id(equipment_id)
