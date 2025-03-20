@@ -40,7 +40,7 @@ class Application:
             os.makedirs(directory, exist_ok=True)
 
         # Set application style
-                self.apply_dark_theme()
+        self.apply_dark_theme()
         
         # Ensure project manager database exists and is initialized
         from lightcraft.models.project_db import ProjectDatabase
