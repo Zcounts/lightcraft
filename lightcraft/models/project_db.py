@@ -176,13 +176,9 @@ class ProjectDatabase:
             
             project_data['data'] = json.dumps(data_json)
             
-            # Insert project
-            self.cursor.execute('''
-            INSERT INTO projects (id, name, description, created_at, updated_at, 
-                                  last_opened_at, data, thumbnail, file_path)
-            VALUES (:id, :name, :description, :created_at, :updated_at, 
-                    :last_opened_at, :data, :thumbnail, :file_path)
-            ''', project_data)
+            # Set last_opened_at if not provided
+            if 'last_opened_at' not in project_data:
+                project_data['last_opened_at'] = current_time
             
             # Create default scene if needed
             if 'create_default_scene' in project_data and project_data['create_default_scene']:
